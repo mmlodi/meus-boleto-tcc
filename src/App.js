@@ -9,10 +9,8 @@ function App() {
 
   return (
     <div className="App">
-       <Header setLogin={setLogin} />
-      <h1>
-        <HomePage/>
-      </h1>
+      <Header setLogin={setLogin} /> 
+      <HomePage/>
     </div>
   );
 }
