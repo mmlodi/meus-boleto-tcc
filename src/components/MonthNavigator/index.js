@@ -64,8 +64,10 @@ const MonthNavigator = () => {
             <Button onClick={handlePrevious}>
               &lt;
             </Button>
-            <Typography style={{ margin: '0 20px' }}>
-              {lastMonth} {lastYear} | {currentMonth} {currentYear} 
+            <Typography style={{ margin: '0 20px',display:'flex',justifyContent:'space-between', width:'30vh'}}>
+              <h4>{currentMonth} {currentYear}</h4>
+              <h4>|</h4>
+              <h4>{lastMonth} {lastYear}</h4>
             </Typography>
             <Button onClick={handleNext}>
               &gt;

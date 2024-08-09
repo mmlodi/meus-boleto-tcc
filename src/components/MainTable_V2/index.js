@@ -31,22 +31,103 @@ const rows = [
   { id: 4, nomeTransacao: 'Lazer', tipoTransacao: 'Gasto', valorTransacao: 332.50, valorOrcamento: 350.60 },
   { id: 5, nomeTransacao: 'Investimento', tipoTransacao: 'Investimento', valorTransacao: 332.50, valorOrcamento: 350.60 },
 ];
-
+// const rows = [
+//   {
+//     id: 1,
+//     name: randomTraderName(),
+//     age: 25,
+//     dateCreated: randomCreatedDate(),
+//     lastLogin: randomUpdatedDate(),
+//   },
+//   {
+//     id: 2,
+//     name: randomTraderName(),
+//     age: 36,
+//     dateCreated: randomCreatedDate(),
+//     lastLogin: randomUpdatedDate(),
+//   },
+//   {
+//     id: 3,
+//     name: randomTraderName(),
+//     age: 19,
+//     dateCreated: randomCreatedDate(),
+//     lastLogin: randomUpdatedDate(),
+//   },
+//   {
+//     id: 4,
+//     name: randomTraderName(),
+//     age: 28,
+//     dateCreated: randomCreatedDate(),
+//     lastLogin: randomUpdatedDate(),
+//   },
+//   {
+//     id: 5,
+//     name: randomTraderName(),
+//     age: 23,
+//     dateCreated: randomCreatedDate(),
+//     lastLogin: randomUpdatedDate(),
+//   },
+// ];
 const columns = [
+  //{ field: 'id', headerName: 'ID', width: 90 },
   {
     field: 'nomeTransacao',
     headerName: 'Nome da Transacao',
     width: 150,
+    editable: true,
+  },
+  {
+    field: 'tipoTransacao',
+    headerName: 'Tipo',
+    //width: 150,
+    editable: true,
   },
   {
     field: 'valorTransacao',
-    headerName: 'Tipo',
+    headerName: 'Total Gasto',
+    type: 'number',
+    //width: 110,
+    editable: true,
   },
-
+  {
+    field: 'valorOrcamento',
+    headerName: 'Orçado',
+    description: 'This column has a value getter and is not sortable.',
+    type : 'number',
+    sortable: false,
+    //width: 160,
+    valueGetter: (value, row) => `${row.valorTransacao || ''} ${row.valorOrcamento || ''}`,
+  },
 ];
+// const columns = [
+//   { field: 'name', 
+//     headerName: 'Name', 
+//     editable: true },
+//   {
+//     field: 'age',
+//     headerName: 'Age',
+//     type: 'number',
+//     editable: true,
+//     align: 'left',
+//     headerAlign: 'left',
+//   },
+//   {
+//     field: 'dateCreated',
+//     headerName: 'Date Created',
+//     type: 'date',
+//     editable: true,
+//   },
+//   {
+//     field: 'lastLogin',
+//     headerName: 'Last Login',
+//     type: 'dateTime',
+//     width: 150,
+//     editable: true,
+//   },
+// ];
 
 
-export default function TabelaResumo() {
+export default function ServerSidePersistence() {
   const mutateRow = useFakeMutation();
 
   const [snackbar, setSnackbar] = React.useState(null);

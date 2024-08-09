@@ -4,6 +4,9 @@ import './index.css';
 import Paper from '@mui/material/Paper';
 import DataGridMain from '../../components/MainTable';
 import MonthNavigator from '../../components/MonthNavigator';
+import ServerSidePersistence from '../../components/MainTable_V2';
+import { Card } from '@mui/material';
+import TabelaResumo from '../../components/ResumeTable';
 
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -17,18 +20,25 @@ const Item = styled(Paper)(({ theme }) => ({
 const HomePage = () => {
     return (
         <React.Fragment>
-            <h1>Resumo </h1>
+            <h1>Resumo Financeiro</h1>
             <div >
-                <MonthNavigator/>
+                <Card>
+                    <div>
+                        <MonthNavigator/>
+                    </div>
+                    <div style={{margin:'10px'}}>
+                        <TabelaResumo/>
+                    </div>
+                </Card>
             </div>
             <div className='mainDiv'>
                 <div>
                     <h3>Mês passado</h3>
-                    <DataGridMain/>
+                    <ServerSidePersistence/>
                 </div>
                 <div>
                     <h3>Mês atual</h3>
-                    <DataGridMain/>
+                    <ServerSidePersistence/>
                 </div>
             </div>
         </React.Fragment>
