@@ -1,13 +1,11 @@
 import './App.css';
-import Header from './components/Header';
-import { useState } from 'react';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
-import CssBaseline from '@mui/material/CssBaseline';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import List from '@mui/material/List';
 import Typography from '@mui/material/Typography';
+import CssBaseline from '@mui/material/CssBaseline';
 import Divider from '@mui/material/Divider';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
@@ -17,14 +15,25 @@ import HomeIcon from '@mui/icons-material/Home';
 import FactCheckIcon from '@mui/icons-material/FactCheck';
 import CategoryIcon from '@mui/icons-material/Category';
 import AppRouter from './Routes';
-import { AccountBox } from '@mui/icons-material';
+import { AccountBox, BarChart } from '@mui/icons-material';
+import { ThemeProvider,createTheme } from '@mui/material';
+
+import { useNavigate } from 'react-router-dom';
+
+const darkTheme = createTheme({
+  palette: {
+    mode: 'dark',
+  },
+});
 
 function App() {
-
+  const navigate = useNavigate();
   const drawerWidth = 240;
   const labelMenu = ['Home', 'Boletos', 'Categorias', 'Perfil'];
 
+
   return (
+    <ThemeProvider theme={darkTheme}>
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
         <AppBar
@@ -50,7 +59,7 @@ function App() {
           <Divider />
           <List>
             <ListItem key='Home' disablePadding>
-              <ListItemButton>
+              <ListItemButton onClick={() => navigate('/')}>
                 <ListItemIcon>
                   <HomeIcon />
                 </ListItemIcon>
@@ -58,23 +67,31 @@ function App() {
               </ListItemButton>
             </ListItem>
             <ListItem key="Boletos" disablePadding>
-              <ListItemButton>
-                <ListItemIcon>
+              <ListItemButton onClick={() => navigate('/home')}>
+                <ListItemIcon >
                   <FactCheckIcon />
                 </ListItemIcon>
                   <ListItemText primary="Boletos" />
               </ListItemButton>
             </ListItem>
             <ListItem key="Categorias" disablePadding>
-              <ListItemButton>
+              <ListItemButton onClick={() => navigate('/category')}>
                 <ListItemIcon>
                   <CategoryIcon />
                 </ListItemIcon>
                   <ListItemText primary="Categoria" />
               </ListItemButton>
             </ListItem>
+            <ListItem key="dash" disablePadding>
+              <ListItemButton onClick={() => navigate('/dashboard')}>
+                <ListItemIcon>
+                  <BarChart />
+                </ListItemIcon>
+                  <ListItemText primary="Dashboards" />
+              </ListItemButton>
+            </ListItem>
             <ListItem key="Perfil" disablePadding>
-              <ListItemButton>
+              <ListItemButton onClick={() => navigate('/user')}>
                 <ListItemIcon>
                   <AccountBox />
                 </ListItemIcon>
@@ -97,6 +114,7 @@ function App() {
           <AppRouter/>
         </Box>
       </Box>
+  </ThemeProvider>
   );
 }
 

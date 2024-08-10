@@ -1,35 +1,13 @@
 import * as React from 'react';
-import { DataGrid } from '@mui/x-data-grid';
-import {
-  randomCreatedDate,
-  randomTraderName,
-  randomUpdatedDate,
-} from '@mui/x-data-grid-generator';
-import Snackbar from '@mui/material/Snackbar';
-import Alert from '@mui/material/Alert';
+import { DataGrid,GridToolbar } from '@mui/x-data-grid';
 
-const useFakeMutation = () => {
-  return React.useCallback(
-    (user) =>
-      new Promise((resolve, reject) => {
-        setTimeout(() => {
-          if (user.name?.trim() === '') {
-            reject(new Error('Error while saving user: name cannot be empty.'));
-          } else {
-            resolve({ ...user, name: user.name?.toUpperCase() });
-          }
-        }, 200);
-      }),
-    [],
-  );
-};
+import Snackbar from '@mui/material/Snackbar';
+
 
 const rows = [
-  { id: 1, nomeTransacao: 'Refeicao', tipoTransacao: 'Gasto', valorTransacao: 332.50, valorOrcamento: 350.60 },
-  { id: 2, nomeTransacao: 'Lazer', tipoTransacao: 'Gasto', valorTransacao: 332.50, valorOrcamento: 350.60 },
-  { id: 3, nomeTransacao: 'Mercado', tipoTransacao: 'Gasto', valorTransacao: 332.50, valorOrcamento: 350.60 },
-  { id: 4, nomeTransacao: 'Lazer', tipoTransacao: 'Gasto', valorTransacao: 332.50, valorOrcamento: 350.60 },
-  { id: 5, nomeTransacao: 'Investimento', tipoTransacao: 'Investimento', valorTransacao: 332.50, valorOrcamento: 350.60 },
+  { id: 1, nomeTransacao: 'Total', tipoTransacao: 'Gasto', valorTransacao: 332.50, valorOrcamento: 350.60 },
+  { id: 2, nomeTransacao: 'Debito', tipoTransacao: 'Gasto', valorTransacao: 332.50, valorOrcamento: 350.60 },
+  { id: 3, nomeTransacao: 'Liquido', tipoTransacao: 'Gasto', valorTransacao: 332.50, valorOrcamento: 350.60 },
 ];
 
 const columns = [
@@ -39,36 +17,25 @@ const columns = [
     width: 150,
   },
   {
-    field: 'valorTransacao',
-    headerName: 'Tipo',
+    field: 'valorTransacao', 
+    type: 'number', 
+    headerName: 'Valor' 
   },
+  {
+    field: 'valorOrcamento', 
+    type: 'number', 
+    headerName: 'Orcado' 
+  }
 
 ];
 
 
 export default function TabelaResumo() {
-  const mutateRow = useFakeMutation();
 
   const [snackbar, setSnackbar] = React.useState(null);
 
-  const handleCloseSnackbar = () => setSnackbar(null);
-
-  const processRowUpdate = React.useCallback(
-    async (newRow) => {
-      // Make the HTTP request to save in the backend
-      const response = await mutateRow(newRow);
-      setSnackbar({ children: 'User successfully saved', severity: 'success' });
-      return response;
-    },
-    [mutateRow],
-  );
-
-  const handleProcessRowUpdateError = React.useCallback((error) => {
-    setSnackbar({ children: error.message, severity: 'error' });
-  }, []);
-
   return (  
-    <div style={{width:550}}>
+    <div>
       <DataGrid
         rows={rows}
         columns={columns}
@@ -76,18 +43,14 @@ export default function TabelaResumo() {
         rowHeight={30}
         hideFooter={true}
         hideFooterPagination={true}
-        processRowUpdate={processRowUpdate}
-        onProcessRowUpdateError={handleProcessRowUpdateError}
       />
       {!!snackbar && (
         <Snackbar
           open
           anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-          onClose={handleCloseSnackbar}
           autoHideDuration={6000}
           
         >
-          <Alert {...snackbar} onClose={handleCloseSnackbar} />
         </Snackbar>
       )}
     </div>

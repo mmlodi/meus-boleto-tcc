@@ -85,47 +85,20 @@ const columns = [
   {
     field: 'valorTransacao',
     headerName: 'Total Gasto',
-    type: 'number',
+    type: 'currency',
     //width: 110,
     editable: true,
   },
   {
     field: 'valorOrcamento',
-    headerName: 'Orçado',
+    headerName: 'Orcado',
     description: 'This column has a value getter and is not sortable.',
     type : 'number',
-    sortable: false,
+    editable: true,
     //width: 160,
-    valueGetter: (value, row) => `${row.valorTransacao || ''} ${row.valorOrcamento || ''}`,
+    //valueGetter: (value, row) => `${row.valorTransacao || ''} ${row.valorOrcamento || ''}`,
   },
 ];
-// const columns = [
-//   { field: 'name', 
-//     headerName: 'Name', 
-//     editable: true },
-//   {
-//     field: 'age',
-//     headerName: 'Age',
-//     type: 'number',
-//     editable: true,
-//     align: 'left',
-//     headerAlign: 'left',
-//   },
-//   {
-//     field: 'dateCreated',
-//     headerName: 'Date Created',
-//     type: 'date',
-//     editable: true,
-//   },
-//   {
-//     field: 'lastLogin',
-//     headerName: 'Last Login',
-//     type: 'dateTime',
-//     width: 150,
-//     editable: true,
-//   },
-// ];
-
 
 export default function ServerSidePersistence() {
   const mutateRow = useFakeMutation();
@@ -149,11 +122,12 @@ export default function ServerSidePersistence() {
   }, []);
 
   return (  
-    <div style={{width:550}}>
+    <div >
       <DataGrid
         rows={rows}
         columns={columns}
         autoHeight={true}
+        autoWidth={true}
         rowHeight={30}
         hideFooter={true}
         hideFooterPagination={true}
