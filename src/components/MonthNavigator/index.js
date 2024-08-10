@@ -6,9 +6,10 @@ import Paper from '@mui/material/Paper';
 
 
 
-const MonthNavigator = () => {
+const MonthNavigator = (onMonthChange) => {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [lastDate, setLastDate] = useState( new Date(currentDate.getFullYear(),currentDate.getMonth()-1 ));
+
 
   const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -35,6 +36,9 @@ const MonthNavigator = () => {
       const lastDate = new Date(prevDate.getFullYear(), prevDate.getMonth() - 1, 1);
       return lastDate;
     })
+
+    onMonthChange(currentDate);
+
   };
 
   const handleNext = () => {
@@ -47,6 +51,8 @@ const MonthNavigator = () => {
       const lastDate = new Date(prevDate.getFullYear(), prevDate.getMonth() + 1, 1);
       return lastDate;
     })
+
+    onMonthChange(currentDate);
   };
 
   const currentMonth = months[currentDate.getMonth()];

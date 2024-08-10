@@ -6,6 +6,7 @@ import MonthNavigator from '../../components/MonthNavigator';
 import ServerSidePersistence from '../../components/MainTable_V2';
 import { Card } from '@mui/material';
 import TabelaResumo from '../../components/ResumeTable';
+import MonthPicker from '../../components/MonthPicker';
 
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -16,6 +17,11 @@ const Item = styled(Paper)(({ theme }) => ({
   }));
 
 const HomePage = () => {
+
+    const handleMonthSelect = (month) => {
+        console.log('Selected month:', month);
+      };
+
     return (
         <React.Fragment>
             <h1>Resumo Financeiro</h1>
@@ -26,17 +32,19 @@ const HomePage = () => {
                     </div>
                     <div style={{margin:'10px',display:'flex',justifyContent:'center'}}>
                     </div>
+
+                    <div>
+                        <TabelaResumo/>
+                    </div>
                 </Card>
             </div>
             <div className='mainDiv'>
                 <div>
                     <h3>Mês passado</h3>
-                    <TabelaResumo/><br></br>
                     <ServerSidePersistence/>
                 </div>
                 <div>
                     <h3>Mês atual</h3>
-                    <TabelaResumo/><br></br>
                     <ServerSidePersistence/>
                 </div>
             </div>

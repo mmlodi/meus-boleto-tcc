@@ -36,23 +36,7 @@ export default function TabelaResumo() {
 
   return (  
     <div>
-      <DataGrid
-        rows={rows}
-        columns={columns}
-        autoHeight={true}
-        rowHeight={30}
-        hideFooter={true}
-        hideFooterPagination={true}
-      />
-      {!!snackbar && (
-        <Snackbar
-          open
-          anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-          autoHideDuration={6000}
-          
-        >
-        </Snackbar>
-      )}
+      
     </div>
   );
 }
