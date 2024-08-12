@@ -15,7 +15,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import FactCheckIcon from '@mui/icons-material/FactCheck';
 import CategoryIcon from '@mui/icons-material/Category';
 import AppRouter from './Routes';
-import { AccountBox, BarChart } from '@mui/icons-material';
+import { AccountBox, BarChart, ShowChart } from '@mui/icons-material';
 import { ThemeProvider,createTheme } from '@mui/material';
 
 import { useNavigate } from 'react-router-dom';
@@ -29,7 +29,6 @@ const darkTheme = createTheme({
 function App() {
   const navigate = useNavigate();
   const drawerWidth = 240;
-  const labelMenu = ['Home', 'Boletos', 'Categorias', 'Perfil'];
 
 
   return (
@@ -67,7 +66,7 @@ function App() {
               </ListItemButton>
             </ListItem>
             <ListItem key="Boletos" disablePadding>
-              <ListItemButton onClick={() => navigate('/home')}>
+              <ListItemButton onClick={() => navigate('/transactions')}>
                 <ListItemIcon >
                   <FactCheckIcon />
                 </ListItemIcon>
@@ -80,6 +79,14 @@ function App() {
                   <CategoryIcon />
                 </ListItemIcon>
                   <ListItemText primary="Categoria" />
+              </ListItemButton>
+            </ListItem>            
+            <ListItem key="Investimentos" disablePadding>
+              <ListItemButton onClick={() => navigate('/investments')}>
+                <ListItemIcon>
+                  <ShowChart />
+                </ListItemIcon>
+                  <ListItemText primary="Investimentos" />
               </ListItemButton>
             </ListItem>
             <ListItem key="dash" disablePadding>
@@ -100,7 +107,7 @@ function App() {
             </ListItem>
           </List>
           <Divider />
-          <div>
+          <div style={{verticalAlign:'middle'}}>
             <div>Resumo de operacoes</div>
             <div>Patrimonio total: 20 000</div>
             <div>Lucros mes passado: 20 000</div>

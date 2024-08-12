@@ -1,0 +1,17 @@
+.carousel-container {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+  }
+  
+  .carousel-items {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    will-change: transform; /* Optimizes the performance of the transition */
+  }
+  
+  .carousel-item {
+    min-width: 100%; /* Each item takes full width of the container */
+    text-align: center;
+    flex-shrink: 0;
+  }
