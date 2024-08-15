@@ -20,46 +20,42 @@ import {
   randomArrayItem,
 } from '@mui/x-data-grid-generator';
 
-const roles = ['Market', 'Finance', 'Development'];
+const roles = [ 'Gasto', 'Investimento'];
 const randomRole = () => {
   return randomArrayItem(roles);
 };
+//{ id: 1, mes: 5, ano: 2024,nomeTransacao: 'Refeicao', tipoTransacao: 'Gasto', valorTransacao: 332.50, valorOrcamento: 350.60 },
 
 const initialRows = [
   {
-    id: randomId(),
-    name: randomTraderName(),
-    age: 25,
-    joinDate: randomCreatedDate(),
-    role: randomRole(),
+    id: 1,
+    name: "Mercado",
+    createdAt: randomCreatedDate(),
+    type: roles[0],
   },
   {
-    id: randomId(),
-    name: randomTraderName(),
-    age: 36,
-    joinDate: randomCreatedDate(),
-    role: randomRole(),
+    id: 2,
+    name: "Gasolina",
+    createdAt: randomCreatedDate(),
+    type: roles[0],
   },
   {
-    id: randomId(),
-    name: randomTraderName(),
-    age: 19,
-    joinDate: randomCreatedDate(),
-    role: randomRole(),
+    id: 3,
+    name: "Lazer",
+    createdAt: randomCreatedDate(),
+    type: roles[0],
   },
   {
-    id: randomId(),
-    name: randomTraderName(),
-    age: 28,
-    joinDate: randomCreatedDate(),
-    role: randomRole(),
+    id:4,
+    name: "Compras aleatórias",
+    createdAt: randomCreatedDate(),
+    type: roles[0],
   },
   {
-    id: randomId(),
-    name: randomTraderName(),
-    age: 23,
-    joinDate: randomCreatedDate(),
-    role: randomRole(),
+    id: 5,
+    name: "VGBL",
+    createdAt: randomCreatedDate(),
+    type: roles[1],
   },
 ];
 
@@ -68,7 +64,7 @@ function EditToolbar(props) {
 
   const handleClick = () => {
     const id = randomId();
-    setRows((oldRows) => [...oldRows, { id, name: '', age: '', isNew: true }]);
+  setRows((oldRows) => [...oldRows, { id, name: '',createdAt: new Date() ,isNew: true }]);
     setRowModesModel((oldModel) => ({
       ...oldModel,
       [id]: { mode: GridRowModes.Edit, fieldToFocus: 'name' },
@@ -131,33 +127,23 @@ export default function FullFeaturedCrudGrid() {
   const columns = [
     { field: 'name', headerName: 'Name', width: 180, editable: true },
     {
-      field: 'age',
-      headerName: 'Age',
-      type: 'number',
-      width: 80,
-      align: 'left',
-      headerAlign: 'left',
-      editable: true,
-    },
-    {
-      field: 'joinDate',
-      headerName: 'Join date',
+      field: 'createdAt',
+      headerName: 'Criação',
       type: 'date',
       width: 180,
-      editable: true,
     },
     {
-      field: 'role',
-      headerName: 'Department',
+      field: 'type',
+      headerName: 'Tipo de transação',
       width: 220,
       editable: true,
       type: 'singleSelect',
-      valueOptions: ['Market', 'Finance', 'Development'],
+      valueOptions: roles,
     },
     {
       field: 'actions',
       type: 'actions',
-      headerName: 'Actions',
+      headerName: 'Ações',
       width: 100,
       cellClassName: 'actions',
       getActions: ({ id }) => {

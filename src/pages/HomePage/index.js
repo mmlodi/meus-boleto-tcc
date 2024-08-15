@@ -74,7 +74,7 @@ const HomePage = () => {
                     { currentMonthRows.length > 0 && <TabelaResumo  updatedRows={currentMonthRows.filter(item => item.mes === selectedMonth.getMonth() - 1)}/>}
                 </div>
                 <div>
-                    <h3>Mês atual</h3>
+                    <h3>Mês escolhido</h3>
                     { currentMonthRows.length > 0 && <MainTable rows={currentMonthRows.filter(item => item.mes === selectedMonth.getMonth())} onUpdateValue={handleUpdateValue}/>}
                     { currentMonthRows.length > 0 &&<TabelaResumo updatedRows={currentMonthRows.filter(item => item.mes === selectedMonth.getMonth())}/>}
                 </div>
