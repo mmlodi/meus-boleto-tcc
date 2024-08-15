@@ -22,50 +22,14 @@ const useFakeMutation = () => {
 };
 
 
-// const rows = [
-//   {
-//     id: 1,
-//     name: randomTraderName(),
-//     age: 25,
-//     dateCreated: randomCreatedDate(),
-//     lastLogin: randomUpdatedDate(),
-//   },
-//   {
-//     id: 2,
-//     name: randomTraderName(),
-//     age: 36,
-//     dateCreated: randomCreatedDate(),
-//     lastLogin: randomUpdatedDate(),
-//   },
-//   {
-//     id: 3,
-//     name: randomTraderName(),
-//     age: 19,
-//     dateCreated: randomCreatedDate(),
-//     lastLogin: randomUpdatedDate(),
-//   },
-//   {
-//     id: 4,
-//     name: randomTraderName(),
-//     age: 28,
-//     dateCreated: randomCreatedDate(),
-//     lastLogin: randomUpdatedDate(),
-//   },
-//   {
-//     id: 5,
-//     name: randomTraderName(),
-//     age: 23,
-//     dateCreated: randomCreatedDate(),
-//     lastLogin: randomUpdatedDate(),
-//   },
-// ];
+
 const columns = [
   //{ field: 'id', headerName: 'ID', width: 90 },
   {
     field: 'nomeTransacao',
     headerName: 'Category',
     width: 150,
-    editable: true,
+    //editable: true,
   },
   // {
   //   field: 'tipoTransacao',
@@ -76,8 +40,7 @@ const columns = [
   {
     field: 'valorTransacao',
     headerName: 'Total Gasto',
-    type: 'currency',
-    //width: 110,
+    type: 'number',
     editable: true,
     valueFormatter: (value) =>  {
       return formatToCurrency(value);
@@ -87,10 +50,8 @@ const columns = [
   {
     field: 'valorOrcamento',
     headerName: 'Orcado',
-    description: 'This column has a value getter and is not sortable.',
     type : 'number',
     editable: true,
-    //width: 160,
     valueFormatter: (value) =>  {
       return formatToCurrency(value);
     }
@@ -100,8 +61,9 @@ const columns = [
 
 export default function MainTable({rows, onUpdateValue}) {
 
+  //const [rowsDataGrid, setRowsDataGrid] = React.useState(rows)
 
-  const mutateRow = useFakeMutation();
+  const  mutateRow = useFakeMutation();
 
   const [snackbar, setSnackbar] = React.useState(null);
 
@@ -109,14 +71,24 @@ export default function MainTable({rows, onUpdateValue}) {
 
   const processRowUpdate = React.useCallback(
     async (newRow) => {
-      // Make the HTTP request to save in the backend
-      const response = await mutateRow(newRow);
-      setSnackbar({ children: 'Alterações salvas', severity: 'success' });
-      onUpdateValue(newRow);
-      return response;
+      try {
+        // Make the HTTP request to save in the backend
+        const response = await mutateRow(newRow);
+  
+        // Update the parent component state
+        onUpdateValue(response);
+  
+        setSnackbar({ children: 'Alterações salvas', severity: 'success' });
+        return response;
+      } catch (error) {
+        handleProcessRowUpdateError(error);
+        throw error; // rethrow the error to keep it bubbling up
+      }
     },
-    [mutateRow],
+    [mutateRow, onUpdateValue],
   );
+
+
 
   const handleProcessRowUpdateError = React.useCallback((error) => {
     setSnackbar({ children: error.message, severity: 'error' });

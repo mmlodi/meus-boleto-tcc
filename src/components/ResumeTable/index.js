@@ -2,37 +2,11 @@ import * as React from 'react';
 import {formatToCurrency} from '../../utils/utils';
 
 
-const rows = [
-  { id: 1, nomeTransacao: 'Total', tipoTransacao: 'Gasto', valorTransacao: 332.50, valorOrcamento: 350.60 },
-  { id: 2, nomeTransacao: 'Debito', tipoTransacao: 'Gasto', valorTransacao: 332.50, valorOrcamento: 350.60 },
-  { id: 3, nomeTransacao: 'Liquido', tipoTransacao: 'Gasto', valorTransacao: 332.50, valorOrcamento: 350.60 },
-];
-
-const columns = [
-  {
-    field: 'nomeTransacao',
-    headerName: 'Nome da Transacao',
-    width: 150,
-  },
-  {
-    field: 'valorTransacao', 
-    type: 'number', 
-    headerName: 'Valor' 
-  },
-  {
-    field: 'valorOrcamento', 
-    type: 'number', 
-    headerName: 'Orcado' 
-  }
-
-];
-
-
 export default function TabelaResumo({updatedRows}) {
 
   
   function sumTransactionValues(rows) {
-    console.log(rows);
+    //console.log(rows);
     const totalValorTransacao = rows.reduce((sum, row) => {
       if (row && row.valorTransacao !== null) {
         return sum + row.valorTransacao;
