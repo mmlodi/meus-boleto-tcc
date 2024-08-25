@@ -7,23 +7,23 @@ export default function TabelaResumo({updatedRows}) {
   
   function sumTransactionValues(rows) {
     //console.log(rows);
-    const totalValorTransacao = rows.reduce((sum, row) => {
-      if (row && row.valorTransacao !== null) {
-        return sum + row.valorTransacao;
+    const totalTransactionValue = rows.reduce((sum, row) => {
+      if (row && row.transactionValue !== null) {
+        return sum + row.transactionValue;
       }
       return sum;
     }, 0);
 
-    const totalValorOrcamento = rows.reduce((sum, row) => {
-      if (row && row.valorOrcamento !== null) {
-        return sum + row.valorOrcamento;
+    const totalTransactionBudget = rows.reduce((sum, row) => {
+      if (row && row.transactionBudget !== null) {
+        return sum + row.transactionBudget;
       }
       return sum;
     }, 0);
   
     return {
-      totalValorTransacao,
-      totalValorOrcamento
+      totalTransactionValue,
+      totalTransactionBudget
     };
   }
 
@@ -31,10 +31,8 @@ export default function TabelaResumo({updatedRows}) {
 
   return (  
     <div>
-      Ganho Renda Ativa:  {formatToCurrency(result.totalValorTransacao)} <br/>
-      Ganho Renda Passiva: {formatToCurrency(result.totalValorOrcamento)} <br/>
-      Gasto: 1600 <br/>
-      Sobra: 2570 <br/>
+      Total gasto:  {formatToCurrency(result.totalTransactionValue)} <br/>
+      Total orçado: {formatToCurrency(result.totalTransactionBudget)} <br/>
     </div>
   );
 }

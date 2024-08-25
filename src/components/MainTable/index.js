@@ -21,24 +21,16 @@ const useFakeMutation = () => {
   );
 };
 
-
-
 const columns = [
   //{ field: 'id', headerName: 'ID', width: 90 },
   {
-    field: 'nomeTransacao',
-    headerName: 'Category',
+    field: 'transactionName',
+    headerName: 'Categoria',
     width: 150,
     //editable: true,
   },
-  // {
-  //   field: 'tipoTransacao',
-  //   headerName: 'Tipo',
-  //   //width: 150,
-  //   editable: true,
-  // },
   {
-    field: 'valorTransacao',
+    field: 'transactionValue',
     headerName: 'Total Gasto',
     type: 'number',
     editable: true,
@@ -48,8 +40,8 @@ const columns = [
       
   },
   {
-    field: 'valorOrcamento',
-    headerName: 'Orcado',
+    field: 'transactionBudget',
+    headerName: 'Orçado',
     type : 'number',
     editable: true,
     valueFormatter: (value) =>  {
@@ -59,11 +51,14 @@ const columns = [
   }
 ];
 
+const categories = [
+  "Utilities", "Entertainment", "Groceries"
+];
+
 export default function MainTable({rows, onUpdateValue}) {
 
-  //const [rowsDataGrid, setRowsDataGrid] = React.useState(rows)
-
-  const  mutateRow = useFakeMutation();
+  const mutateRow = useFakeMutation();
+  const [completedRows, setCompletedRows ] = React.useState(rows)
 
   const [snackbar, setSnackbar] = React.useState(null);
 
@@ -87,8 +82,6 @@ export default function MainTable({rows, onUpdateValue}) {
     },
     [mutateRow, onUpdateValue],
   );
-
-
 
   const handleProcessRowUpdateError = React.useCallback((error) => {
     setSnackbar({ children: error.message, severity: 'error' });
