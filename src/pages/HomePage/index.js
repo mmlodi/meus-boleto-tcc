@@ -9,40 +9,22 @@ import TabelaResumo from '../../components/ResumeTable';
 
 const HomePage = () => {
 
-    const [selectedMonth, setSelectedMonth] = useState( new Date());
-    // const [currentMonthRows, setCurrentMonthRows] = useState ([
-    //     { id: 1, mes: 5, ano: 2024,nomeTransacao: 'Refeicao', tipoTransacao: 'Gasto', valorTransacao: 332.50, valorOrcamento: 350.60 },
-    //     { id: 2, mes: 5, ano: 2024,nomeTransacao: 'Gasolina', tipoTransacao: 'Gasto', valorTransacao: 332.50, valorOrcamento: 350.60 },
-    //     { id: 3, mes: 5, ano: 2024,nomeTransacao: 'Mercado', tipoTransacao: 'Gasto', valorTransacao: 332.50, valorOrcamento: 350.60 },
-    //     { id: 4, mes: 5, ano: 2024,nomeTransacao: 'Lazer', tipoTransacao: 'Gasto', valorTransacao: 332.50, valorOrcamento: 350.60 },
-    //     { id: 5, mes: 5, ano: 2024,nomeTransacao: 'Investimento', tipoTransacao: 'Investimento', valorTransacao: 332.50, valorOrcamento: 350.60 },
-    //     { id: 6, mes: 6, ano: 2024,nomeTransacao: 'Refeicao', tipoTransacao: 'Gasto', valorTransacao: 332.50, valorOrcamento: 350.60 },
-    //     { id: 7, mes: 6, ano: 2024,nomeTransacao: 'Gasolina', tipoTransacao: 'Gasto', valorTransacao: 332.50, valorOrcamento: 350.60 },
-    //     { id: 8, mes: 6, ano: 2024,nomeTransacao: 'Mercado', tipoTransacao: 'Gasto', valorTransacao: 332.50, valorOrcamento: 350.60 },
-    //     { id: 9, mes: 6, ano: 2024,nomeTransacao: 'Lazer', tipoTransacao: 'Gasto', valorTransacao: 332.50, valorOrcamento: 350.60 },
-    //     { id: 10, mes: 6, ano: 2024,nomeTransacao: 'Investimento', tipoTransacao: 'Investimento', valorTransacao: 332.50, valorOrcamento: 350.60 },
-    //     { id: 11, mes: 7, ano: 2024,nomeTransacao: 'Refeicao', tipoTransacao: 'Gasto', valorTransacao: 332.50, valorOrcamento: 350.60 },
-    //     { id: 12, mes: 7, ano: 2024,nomeTransacao: 'Gasolina', tipoTransacao: 'Gasto', valorTransacao: 332.50, valorOrcamento: 350.60 },
-    //     { id: 13, mes: 7, ano: 2024,nomeTransacao: 'Mercado', tipoTransacao: 'Gasto', valorTransacao: 332.50, valorOrcamento: 350.60 },
-    //     { id: 14, mes: 7, ano: 2024,nomeTransacao: 'Lazer', tipoTransacao: 'Gasto', valorTransacao: 332.50, valorOrcamento: 350.60 },
-    //     { id: 15, mes: 7, ano: 2024,nomeTransacao: 'Investimento', tipoTransacao: 'Investimento', valorTransacao: 332.50, valorOrcamento: 350.60 },
-    //     { id: 16, mes: 8, ano: 2024,nomeTransacao: 'Refeicao', tipoTransacao: 'Gasto', valorTransacao: 332.50, valorOrcamento: 350.60 },
-    //     { id: 17, mes: 8, ano: 2024,nomeTransacao: 'Gasolina', tipoTransacao: 'Gasto', valorTransacao: 332.50, valorOrcamento: 350.60 },
-    //     { id: 18, mes: 8, ano: 2024,nomeTransacao: 'Mercado', tipoTransacao: 'Gasto', valorTransacao: 332.50, valorOrcamento: 350.60 },
-    //     { id: 19, mes: 8, ano: 2024,nomeTransacao: 'Lazer', tipoTransacao: 'Gasto', valorTransacao: 332.50, valorOrcamento: 350.60 },
-    //     { id: 20, mes: 8, ano: 2024,nomeTransacao: 'Investimento', tipoTransacao: 'Investimento', valorTransacao: 332.50, valorOrcamento: 350.60 }
-    // ]);
 
+    const [selectedMonth, setSelectedMonth] = useState( new Date());
     const [currentMonthRows, setCurrentMonthRows] = useState (
         [
             {
                 id: 1,
-                transactionName: "Refeicao",
-                category: null,
+                transactionName: "Mercado",
+                category: {
+                    id:7,
+                    categoryName: "Mercado",
+                    tipoCategoria: "BOLETO"
+                },
                 monthlyData: {
                     id: 1,
-                    month: 1,
-                    year: 2020
+                    month: 7,
+                    year: 2024
                 },
                 description: "Almoço no restaurante",
                 user: {
@@ -57,17 +39,17 @@ const HomePage = () => {
                 transactionBudget: null
             },
             {
-                id: 2,
-                transactionName: "Gasolina",
+                id: 19,
+                transactionName: "Mercado",
                 category: {
-                    id: 1,
+                    id: 7,
                     categoryName: "Mercado",
                     tipoCategoria: "BOLETO"
                 },
                 monthlyData: {
                     id: 1,
-                    month: 1,
-                    year: 2020
+                    month: 6,
+                    year: 2024
                 },
                 description: "soma de todos os abastecimentos no mes",
                 user: {
@@ -82,17 +64,17 @@ const HomePage = () => {
                 transactionBudget: null
             },
             {
-                id: 3,
-                transactionName: "Mercado",
+                id: 8,
+                transactionName: "Alimentação",
                 category: {
-                    id: 2,
+                    id: 6,
                     categoryName: "Alimentação",
-                    tipoCategoria: "DESPESA"
+                    tipoCategoria: "BOLETO"
                 },
                 monthlyData: {
                     id: 2,
-                    month: 2,
-                    year: 2020
+                    month: 8,
+                    year: 2024
                 },
                 description: "Compras do mês no supermercado",
                 user: {
@@ -108,16 +90,16 @@ const HomePage = () => {
             },
             {
                 id: 4,
-                transactionName: "Cinema",
+                transactionName: "Lazer",
                 category: {
-                    id: 3,
+                    id: 5,
                     categoryName: "Lazer",
                     tipoCategoria: "DESPESA"
                 },
                 monthlyData: {
-                    id: 3,
-                    month: 3,
-                    year: 2020
+                    id: 4,
+                    month: 5,
+                    year: 2024
                 },
                 description: "Sessão de cinema com amigos",
                 user: {
@@ -136,13 +118,13 @@ const HomePage = () => {
                 transactionName: "Academia",
                 category: {
                     id: 4,
-                    categoryName: "Saúde",
+                    categoryName: "Academia",
                     tipoCategoria: "DESPESA"
                 },
                 monthlyData: {
                     id: 4,
-                    month: 4,
-                    year: 2020
+                    month: 6,
+                    year: 2024
                 },
                 description: "Mensalidade da academia",
                 user: {
@@ -160,14 +142,14 @@ const HomePage = () => {
                 id: 6,
                 transactionName: "Livros",
                 category: {
-                    id: 5,
-                    categoryName: "Educação",
+                    id: 1,
+                    categoryName: "Livros",
                     tipoCategoria: "INVESTIMENTO"
                 },
                 monthlyData: {
                     id: 5,
-                    month: 5,
-                    year: 2020
+                    month: 6,
+                    year: 2024
                 },
                 description: "Compra de livros para o curso",
                 user: {
@@ -183,32 +165,112 @@ const HomePage = () => {
             }
         ]
     );
+    const [newCurrentMonthRows, setNewCurrentMonthRows] = useState(currentMonthRows);
+    const categories = [
+        { id: 1, categoryName: "Livros", tipoCategoria: "EXPENSE" },
+        { id: 2, categoryName: "Uber", tipoCategoria: "EXPENSE" },
+        { id: 3, categoryName: "Gasolina", tipoCategoria: "EXPENSE" },
+        { id: 4, categoryName: "Academia", tipoCategoria: "EXPENSE" },
+        { id: 5, categoryName: "Lazer", tipoCategoria: "EXPENSE" },
+        { id: 6, categoryName: "Alimentação", tipoCategoria: "EXPENSE" },
+        { id: 7, categoryName: "Mercado", tipoCategoria: "EXPENSE" }
+    ];
 
+    function handleMonthSelect (date){
+        setSelectedMonth(date);       
+        const newRows = filterByMonthsAndZeroIfNotDefined(currentMonthRows, date, categories);
+        setNewCurrentMonthRows(newRows);
+    };
 
-    function handleMonthSelect (month){
-        setSelectedMonth(month);
+    const filterByMonthsAndZeroIfNotDefined = (rows, date, categories) => {
+        const currentDate = new Date(date);
+        const currentYear = currentDate.getFullYear();
+    
+        const lastDate = new Date(currentDate);
+        lastDate.setMonth(currentDate.getMonth() - 1);
+    
+        const nextDate = new Date(currentDate);
+        nextDate.setMonth(currentDate.getMonth() + 1);
+    
+        const monthsToCheck = [
+            { month: currentDate.getMonth() , year: currentYear },
+            { month: lastDate.getMonth() , year: lastDate.getFullYear() },
+            { month: nextDate.getMonth() , year: nextDate.getFullYear() }
+        ];
+    
+        const newRows = monthsToCheck.flatMap(({ month, year }) => {
+            return categories.map(category => {
+                const existingRow = rows.find(row => 
+                    row.monthlyData.month === month && 
+                    row.monthlyData.year === year && 
+                    row.category && row.category.id === category.id
+                );
+                if (existingRow) {
+                    return existingRow;
+                } else {
+                    // Create a new entry with zero values and a temporary unique ID
+                    return {
+                        id: `${category.id}-${month}-${year}`,  // Generate a temporary unique ID
+                        transactionName: category.categoryName,
+                        category: category,
+                        monthlyData: {
+                            id: null,  // No specific id for monthlyData
+                            month: month,
+                            year: year
+                        },
+                        description: "No transactions for this period",
+                        user: null,  // Or default user if applicable
+                        createdAt: null,
+                        changedAt: null,
+                        transactionValue: 0,
+                        transactionBudget: 0
+                    };
+                }
+            });
+        });
+    
+        return newRows;
     };
 
     async function handleUpdateValue (value){
         updateRow(value);
     }
 
-
     const updateRow = (updatedFields) => {
         console.log("ID:", updatedFields.id, "Updated Fields:", updatedFields);
     
-        const updatedRows = currentMonthRows.map(row =>
-            row.id === updatedFields.id 
-                ? { 
-                    ...row, 
-                    transactionValue: updatedFields.transactionValue, 
-                    transactionBudget: updatedFields.transactionBudget 
-                  } 
-                : row
-        );
-    
-        setCurrentMonthRows(updatedRows);
+        // Check if the row with the given ID exists
+        const index = currentMonthRows.findIndex(row => row.id === updatedFields.id);
+
+        if (index !== -1) {
+            // Update the existing row
+            const updatedRows = currentMonthRows.map(row =>
+                row.id === updatedFields.id 
+                    ? { 
+                        ...row, 
+                        transactionValue: updatedFields.transactionValue, 
+                        transactionBudget: updatedFields.transactionBudget 
+                      } 
+                    : row
+            );
+            setCurrentMonthRows(updatedRows)
+        } else {
+            // If the ID doesn't exist, add the new row
+            const newRow = {
+                id: updatedFields.id,
+                transactionValue: updatedFields.transactionValue,
+                transactionBudget: updatedFields.transactionBudget,
+                // Add other necessary fields with default values if needed
+            };
+            const updatedRows = [...currentMonthRows, newRow];
+            setCurrentMonthRows(updatedRows)
+        }
+
+        const newRows = filterByMonthsAndZeroIfNotDefined(currentMonthRows, selectedMonth, categories);
+        setNewCurrentMonthRows(newRows);
+
     };
+
 
     //TODO CUIDAR COM O ANO NO FILTRO NAS LINHAS ABAIXO NÂO ESTOU FILTRANDO PELO ANO
     return (
@@ -224,18 +286,18 @@ const HomePage = () => {
             <div className='mainDiv'>
                 <div>
                     <h3>Mês passado</h3>
-                    { currentMonthRows.length > 0 && <MainTable rows={currentMonthRows.filter(item => item.monthlyData.month === selectedMonth.getMonth() - 1)} onUpdateValue={handleUpdateValue}/>}
-                    { currentMonthRows.length > 0 && <TabelaResumo  updatedRows={currentMonthRows.filter(item => item.monthlyData.month === selectedMonth.getMonth() - 1)}/>}
+                    { newCurrentMonthRows.length > 0 && <MainTable rows={newCurrentMonthRows.filter(item => item.monthlyData.month === selectedMonth.getMonth() - 1)} onUpdateValue={handleUpdateValue}/>}
+                    { newCurrentMonthRows.length > 0 && <TabelaResumo  updatedRows={newCurrentMonthRows.filter(item => item.monthlyData.month === selectedMonth.getMonth() - 1)}/>}
                 </div>
                 <div>
                     <h3>Mês escolhido</h3>
-                    { currentMonthRows.length > 0 && <MainTable rows={currentMonthRows.filter(item => item.monthlyData.month === selectedMonth.getMonth())} onUpdateValue={handleUpdateValue}/>}
-                    { currentMonthRows.length > 0 &&<TabelaResumo updatedRows={currentMonthRows.filter(item => item.monthlyData.month === selectedMonth.getMonth())}/>}
+                    { newCurrentMonthRows.length > 0 && <MainTable rows={newCurrentMonthRows.filter(item => item.monthlyData.month === selectedMonth.getMonth())} onUpdateValue={handleUpdateValue}/>}
+                    { newCurrentMonthRows.length > 0 &&<TabelaResumo updatedRows={newCurrentMonthRows.filter(item => item.monthlyData.month === selectedMonth.getMonth())}/>}
                 </div>
                 <div>
                     <h3>Mês Futuro</h3>
-                    { currentMonthRows.length > 0 &&<MainTable rows={currentMonthRows.filter(item => item.monthlyData.month === selectedMonth.getMonth() + 1 )} onUpdateValue={handleUpdateValue}/>}
-                    { currentMonthRows.length > 0 &&<TabelaResumo updatedRows={currentMonthRows.filter(item => item.monthlyData.month === selectedMonth.getMonth() + 1 )}/>}
+                    { newCurrentMonthRows.length > 0 &&<MainTable rows={newCurrentMonthRows.filter(item => item.monthlyData.month === selectedMonth.getMonth() + 1 )} onUpdateValue={handleUpdateValue}/>}
+                    { newCurrentMonthRows.length > 0 &&<TabelaResumo updatedRows={newCurrentMonthRows.filter(item => item.monthlyData.month === selectedMonth.getMonth() + 1 )}/>}
                 </div>
             </div>
         </React.Fragment>

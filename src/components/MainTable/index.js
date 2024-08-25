@@ -51,10 +51,6 @@ const columns = [
   }
 ];
 
-const categories = [
-  "Utilities", "Entertainment", "Groceries"
-];
-
 export default function MainTable({rows, onUpdateValue}) {
 
   const mutateRow = useFakeMutation();
@@ -99,6 +95,11 @@ export default function MainTable({rows, onUpdateValue}) {
         hideFooterPagination={true}
         processRowUpdate={processRowUpdate}
         onProcessRowUpdateError={handleProcessRowUpdateError}
+        initialState={{
+          sorting: {
+            sortModel: [{ field: 'transactionName', sort: 'asc' }],
+          },
+        }}
       />
       {!!snackbar && (
         <Snackbar
