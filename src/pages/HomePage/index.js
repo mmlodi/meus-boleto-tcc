@@ -6,178 +6,56 @@ import MonthNavigator from '../../components/MonthNavigator';
 import MainTable from '../../components/MainTable';
 import { Card } from '@mui/material';
 import TabelaResumo from '../../components/ResumeTable';
+import { api } from '../../Service/backendAPI';
 
 const HomePage = () => {
 
 
     const [selectedMonth, setSelectedMonth] = useState( new Date());
-    const [currentMonthRows, setCurrentMonthRows] = useState (
-        [
-            {
-                id: 1,
-                transactionName: "Mercado",
-                category: {
-                    id:7,
-                    categoryName: "Mercado",
-                    tipoCategoria: "BOLETO"
-                },
-                monthlyData: {
-                    id: 1,
-                    month: 7,
-                    year: 2024
-                },
-                description: "Almoço no restaurante",
-                user: {
-                    id: 1,
-                    userName: "john_doe",
-                    createdAt: "2024-08-18T00:00:00.000+00:00",
-                    email: "john.doe@example.com"
-                },
-                createdAt: "2024-05-01T12:00:00.000+00:00",
-                changedAt: "2024-05-01T12:00:00.000+00:00",
-                transactionValue: null,
-                transactionBudget: null
-            },
-            {
-                id: 19,
-                transactionName: "Mercado",
-                category: {
-                    id: 7,
-                    categoryName: "Mercado",
-                    tipoCategoria: "BOLETO"
-                },
-                monthlyData: {
-                    id: 1,
-                    month: 6,
-                    year: 2024
-                },
-                description: "soma de todos os abastecimentos no mes",
-                user: {
-                    id: 1,
-                    userName: "john_doe",
-                    createdAt: "2024-08-18T00:00:00.000+00:00",
-                    email: "john.doe@example.com"
-                },
-                createdAt: "2024-05-01T12:00:00.000+00:00",
-                changedAt: "2024-05-01T12:00:00.000+00:00",
-                transactionValue: null,
-                transactionBudget: null
-            },
-            {
-                id: 8,
-                transactionName: "Alimentação",
-                category: {
-                    id: 6,
-                    categoryName: "Alimentação",
-                    tipoCategoria: "BOLETO"
-                },
-                monthlyData: {
-                    id: 2,
-                    month: 8,
-                    year: 2024
-                },
-                description: "Compras do mês no supermercado",
-                user: {
-                    id: 1,
-                    userName: "john_doe",
-                    createdAt: "2024-08-18T00:00:00.000+00:00",
-                    email: "john.doe@example.com"
-                },
-                createdAt: "2024-06-01T10:00:00.000+00:00",
-                changedAt: "2024-06-01T10:00:00.000+00:00",
-                transactionValue: 450.75,
-                transactionBudget: 500.00
-            },
-            {
-                id: 4,
-                transactionName: "Lazer",
-                category: {
-                    id: 5,
-                    categoryName: "Lazer",
-                    tipoCategoria: "DESPESA"
-                },
-                monthlyData: {
-                    id: 4,
-                    month: 5,
-                    year: 2024
-                },
-                description: "Sessão de cinema com amigos",
-                user: {
-                    id: 1,
-                    userName: "john_doe",
-                    createdAt: "2024-08-18T00:00:00.000+00:00",
-                    email: "john.doe@example.com"
-                },
-                createdAt: "2024-07-01T14:00:00.000+00:00",
-                changedAt: "2024-07-01T14:00:00.000+00:00",
-                transactionValue: 120.00,
-                transactionBudget: 150.00
-            },
-            {
-                id: 5,
-                transactionName: "Academia",
-                category: {
-                    id: 4,
-                    categoryName: "Academia",
-                    tipoCategoria: "DESPESA"
-                },
-                monthlyData: {
-                    id: 4,
-                    month: 6,
-                    year: 2024
-                },
-                description: "Mensalidade da academia",
-                user: {
-                    id: 1,
-                    userName: "john_doe",
-                    createdAt: "2024-08-18T00:00:00.000+00:00",
-                    email: "john.doe@example.com"
-                },
-                createdAt: "2024-08-01T07:00:00.000+00:00",
-                changedAt: "2024-08-01T07:00:00.000+00:00",
-                transactionValue: 90.00,
-                transactionBudget: 100.00
-            },
-            {
-                id: 6,
-                transactionName: "Livros",
-                category: {
-                    id: 1,
-                    categoryName: "Livros",
-                    tipoCategoria: "INVESTIMENTO"
-                },
-                monthlyData: {
-                    id: 5,
-                    month: 6,
-                    year: 2024
-                },
-                description: "Compra de livros para o curso",
-                user: {
-                    id: 1,
-                    userName: "john_doe",
-                    createdAt: "2024-08-18T00:00:00.000+00:00",
-                    email: "john.doe@example.com"
-                },
-                createdAt: "2024-09-01T09:30:00.000+00:00",
-                changedAt: "2024-09-01T09:30:00.000+00:00",
-                transactionValue: null,
-                transactionBudget: null
-            }
-        ]
-    );
+    const [currentMonthRows, setCurrentMonthRows] = useState([]);
     const [newCurrentMonthRows, setNewCurrentMonthRows] = useState(currentMonthRows);
     const categories = [
-        { id: 1, categoryName: "Livros", tipoCategoria: "EXPENSE" },
-        { id: 2, categoryName: "Uber", tipoCategoria: "EXPENSE" },
-        { id: 3, categoryName: "Gasolina", tipoCategoria: "EXPENSE" },
-        { id: 4, categoryName: "Academia", tipoCategoria: "EXPENSE" },
-        { id: 5, categoryName: "Lazer", tipoCategoria: "EXPENSE" },
-        { id: 6, categoryName: "Alimentação", tipoCategoria: "EXPENSE" },
-        { id: 7, categoryName: "Mercado", tipoCategoria: "EXPENSE" }
+        { id: 1, categoryName: "Livros", tipoCategoria: "BOLETO" },
+        { id: 2, categoryName: "Uber", tipoCategoria: "BOLETO" },
+        { id: 3, categoryName: "Gasolina", tipoCategoria: "BOLETO" },
+        { id: 4, categoryName: "Academia", tipoCategoria: "BOLETO" },
+        { id: 5, categoryName: "Lazer", tipoCategoria: "BOLETO" },
+        { id: 6, categoryName: "Alimentação", tipoCategoria: "BOLETO" },
+        { id: 7, categoryName: "Mercado", tipoCategoria: "BOLETO" }
     ];
 
+    useEffect( ()=> {
+        const fetchData = async () => {
+            try {
+                const result = await api.get('transactions/user/1');// Replace 'data-endpoint' with your actual endpoint
+                console.log('NOTIF: SUCESSO',result);
+                setCurrentMonthRows(result);
+            } catch (err) {
+                console.error("NOTIF: Erro", err)
+            }
+        };
+          fetchData();
+    },[])
+
+    useEffect(()=>{
+        console.log(selectedMonth)
+        const date = new Date(selectedMonth);
+        handleMonthSelect(date)
+    },[currentMonthRows])
+
+    const insertNewValue = async (body) => {
+        try {
+            const result = await api.post();// Replace 'data-endpoint' with your actual endpoint
+            console.log('NOTIF: SUCESSO',result);
+            setCurrentMonthRows(result);
+        } catch (err) {
+            console.error("NOTIF: Erro", err)
+        }
+    };
+
     function handleMonthSelect (date){
-        setSelectedMonth(date);       
+        setSelectedMonth(date);    
+        //console.log(date)   
         const newRows = filterByMonthsAndZeroIfNotDefined(currentMonthRows, date, categories);
         setNewCurrentMonthRows(newRows);
     };
@@ -197,7 +75,8 @@ const HomePage = () => {
             { month: lastDate.getMonth() , year: lastDate.getFullYear() },
             { month: nextDate.getMonth() , year: nextDate.getFullYear() }
         ];
-    
+        
+        console.log(rows);
         const newRows = monthsToCheck.flatMap(({ month, year }) => {
             return categories.map(category => {
                 const existingRow = rows.find(row => 
@@ -233,6 +112,7 @@ const HomePage = () => {
     };
 
     async function handleUpdateValue (value){
+        console.log(value);
         updateRow(value);
     }
 
@@ -256,18 +136,13 @@ const HomePage = () => {
             setCurrentMonthRows(updatedRows)
         } else {
             // If the ID doesn't exist, add the new row
-            const newRow = {
-                id: updatedFields.id,
-                transactionValue: updatedFields.transactionValue,
-                transactionBudget: updatedFields.transactionBudget,
-                // Add other necessary fields with default values if needed
-            };
+            const newRow = updatedFields;
             const updatedRows = [...currentMonthRows, newRow];
             setCurrentMonthRows(updatedRows)
         }
 
-        const newRows = filterByMonthsAndZeroIfNotDefined(currentMonthRows, selectedMonth, categories);
-        setNewCurrentMonthRows(newRows);
+        //const newRows = filterByMonthsAndZeroIfNotDefined(currentMonthRows, selectedMonth, categories);
+        //setNewCurrentMonthRows(newRows);
 
     };
 
