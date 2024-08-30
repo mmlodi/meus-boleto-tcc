@@ -55,7 +55,6 @@ export default function MainTable({rows, onUpdateValue}) {
 
   const mutateRow = useFakeMutation();
   const [completedRows, setCompletedRows ] = React.useState(rows)
-
   const [snackbar, setSnackbar] = React.useState(null);
 
   const handleCloseSnackbar = () => setSnackbar(null);

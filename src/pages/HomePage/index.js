@@ -38,16 +38,16 @@ const HomePage = () => {
     },[])
 
     useEffect(()=>{
-        console.log(selectedMonth)
+        console.log(selectedMonth);
         const date = new Date(selectedMonth);
-        handleMonthSelect(date)
+        handleMonthSelect(date);
     },[currentMonthRows])
 
-    const insertNewValue = async (body) => {
+    const upsertNewValue = async (body) => {
         try {
-            const result = await api.post();// Replace 'data-endpoint' with your actual endpoint
+            const result = await api.post('transactions',body);// Replace 'data-endpoint' with your actual endpoint
             console.log('NOTIF: SUCESSO',result);
-            setCurrentMonthRows(result);
+            //setCurrentMonthRows(result);
         } catch (err) {
             console.error("NOTIF: Erro", err)
         }
@@ -55,7 +55,7 @@ const HomePage = () => {
 
     function handleMonthSelect (date){
         setSelectedMonth(date);    
-        //console.log(date)   
+        console.log(date)   
         const newRows = filterByMonthsAndZeroIfNotDefined(currentMonthRows, date, categories);
         setNewCurrentMonthRows(newRows);
     };
@@ -89,7 +89,7 @@ const HomePage = () => {
                 } else {
                     // Create a new entry with zero values and a temporary unique ID
                     return {
-                        id: `${category.id}-${month}-${year}`,  // Generate a temporary unique ID
+                        id: category.id,  // Generate a temporary unique ID
                         transactionName: category.categoryName,
                         category: category,
                         monthlyData: {
@@ -98,9 +98,9 @@ const HomePage = () => {
                             year: year
                         },
                         description: "No transactions for this period",
-                        user: null,  // Or default user if applicable
-                        createdAt: null,
-                        changedAt: null,
+                        user: { id : 1 },  // Or default user if applicable
+                        //createdAt: null,
+                        //changedAt: null,
                         transactionValue: 0,
                         transactionBudget: 0
                     };
@@ -114,11 +114,12 @@ const HomePage = () => {
     async function handleUpdateValue (value){
         console.log(value);
         updateRow(value);
+        upsertNewValue(value);
     }
 
     const updateRow = (updatedFields) => {
         console.log("ID:", updatedFields.id, "Updated Fields:", updatedFields);
-    
+        
         // Check if the row with the given ID exists
         const index = currentMonthRows.findIndex(row => row.id === updatedFields.id);
 
@@ -140,7 +141,7 @@ const HomePage = () => {
             const updatedRows = [...currentMonthRows, newRow];
             setCurrentMonthRows(updatedRows)
         }
-
+        
         //const newRows = filterByMonthsAndZeroIfNotDefined(currentMonthRows, selectedMonth, categories);
         //setNewCurrentMonthRows(newRows);
 
