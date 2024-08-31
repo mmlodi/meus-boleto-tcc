@@ -33,6 +33,9 @@ export default function TabelaResumo({updatedRows}) {
     <div>
       Total gasto:  {formatToCurrency(result.totalTransactionValue)} <br/>
       Total orçado: {formatToCurrency(result.totalTransactionBudget)} <br/>
+      Ganhos com Investimentos:<br/>
+      Ganhos com Salario:<br/>
+      Liquido Total:
     </div>
   );
 }

@@ -24,10 +24,13 @@ const useFakeMutation = () => {
 const columns = [
   //{ field: 'id', headerName: 'ID', width: 90 },
   {
-    field: 'transactionName',
+    field: 'category',
     headerName: 'Categoria',
     width: 150,
     //editable: true,
+    valueFormatter: (value) =>  {
+      return value.categoryName;
+    }
   },
   {
     field: 'transactionValue',
@@ -54,7 +57,7 @@ const columns = [
 export default function MainTable({rows, onUpdateValue}) {
 
   const mutateRow = useFakeMutation();
-  const [completedRows, setCompletedRows ] = React.useState(rows)
+  //const [completedRows, setCompletedRows ] = React.useState(rows)
   const [snackbar, setSnackbar] = React.useState(null);
 
   const handleCloseSnackbar = () => setSnackbar(null);

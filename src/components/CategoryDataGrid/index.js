@@ -13,58 +13,17 @@ import {
   GridActionsCellItem,
   GridRowEditStopReasons,
 } from '@mui/x-data-grid';
-import {
-  randomCreatedDate,
-  randomTraderName,
-  randomId,
-  randomArrayItem,
-} from '@mui/x-data-grid-generator';
 
-const roles = [ 'Gasto', 'Investimento'];
-const randomRole = () => {
-  return randomArrayItem(roles);
-};
 //{ id: 1, mes: 5, ano: 2024,nomeTransacao: 'Refeicao', tipoTransacao: 'Gasto', valorTransacao: 332.50, valorOrcamento: 350.60 },
 
-const initialRows = [
-  {
-    id: 1,
-    name: "Mercado",
-    createdAt: randomCreatedDate(),
-    type: roles[0],
-  },
-  {
-    id: 2,
-    name: "Gasolina",
-    createdAt: randomCreatedDate(),
-    type: roles[0],
-  },
-  {
-    id: 3,
-    name: "Lazer",
-    createdAt: randomCreatedDate(),
-    type: roles[0],
-  },
-  {
-    id:4,
-    name: "Compras aleatórias",
-    createdAt: randomCreatedDate(),
-    type: roles[0],
-  },
-  {
-    id: 5,
-    name: "VGBL",
-    createdAt: randomCreatedDate(),
-    type: roles[1],
-  },
-];
+
 
 function EditToolbar(props) {
   const { setRows, setRowModesModel } = props;
 
   const handleClick = () => {
-    const id = randomId();
-  setRows((oldRows) => [...oldRows, { id, name: '',createdAt: new Date() ,isNew: true }]);
+    const id = 232321;
+    setRows((oldRows) => [...oldRows, { id, name: '',createdAt: new Date() ,isNew: true }]);
     setRowModesModel((oldModel) => ({
       ...oldModel,
       [id]: { mode: GridRowModes.Edit, fieldToFocus: 'name' },
@@ -80,8 +39,8 @@ function EditToolbar(props) {
   );
 }
 
-export default function FullFeaturedCrudGrid() {
-  const [rows, setRows] = React.useState(initialRows);
+export default function DataGridCategory({categories}) {
+  const [rows, setRows] = React.useState(categories);
   const [rowModesModel, setRowModesModel] = React.useState({});
 
   const handleRowEditStop = (params, event) => {
@@ -125,20 +84,14 @@ export default function FullFeaturedCrudGrid() {
   };
 
   const columns = [
-    { field: 'name', headerName: 'Name', width: 180, editable: true },
+    { field: 'categoryName', headerName: 'Nome Categoria', width: 180, editable: true },
     {
-      field: 'createdAt',
-      headerName: 'Criação',
-      type: 'date',
-      width: 180,
-    },
-    {
-      field: 'type',
+      field: 'tipoCategoria',
       headerName: 'Tipo de transação',
       width: 220,
       editable: true,
       type: 'singleSelect',
-      valueOptions: roles,
+      valueOptions: ["BOLETO", "CREDITO"],
     },
     {
       field: 'actions',

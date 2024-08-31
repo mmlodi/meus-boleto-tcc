@@ -7,6 +7,7 @@ import MainTable from '../../components/MainTable';
 import { Card } from '@mui/material';
 import TabelaResumo from '../../components/ResumeTable';
 import { api } from '../../Service/backendAPI';
+import { randomInt } from '@mui/x-data-grid-generator';
 
 const HomePage = () => {
 
@@ -25,15 +26,6 @@ const HomePage = () => {
     ];
 
     useEffect( ()=> {
-        const fetchData = async () => {
-            try {
-                const result = await api.get('transactions/user/1');// Replace 'data-endpoint' with your actual endpoint
-                console.log('NOTIF: SUCESSO',result);
-                setCurrentMonthRows(result);
-            } catch (err) {
-                console.error("NOTIF: Erro", err)
-            }
-        };
           fetchData();
     },[])
 
@@ -43,11 +35,28 @@ const HomePage = () => {
         handleMonthSelect(date);
     },[currentMonthRows])
 
-    const upsertNewValue = async (body) => {
+    const fetchData = async () => {
         try {
-            const result = await api.post('transactions',body);// Replace 'data-endpoint' with your actual endpoint
+            const result = await api.get('transactions/user/1');// Replace 'data-endpoint' with your actual endpoint
             console.log('NOTIF: SUCESSO',result);
-            //setCurrentMonthRows(result);
+            setCurrentMonthRows(result);
+        } catch (err) {
+            console.error("NOTIF: Erro", err)
+        }
+    };
+
+    const upsertNewValue = async (body) => {
+        const bodyToSend = {
+                category: body.category,
+                monthlyData: body.monthlyData,
+                user: { id : 1 }, 
+                transactionValue: body.transactionValue,
+                transactionBudget: body.transactionBudget
+            }
+        try {
+            const result = await api.post('transactions',bodyToSend);// Replace 'data-endpoint' with your actual endpoint
+            console.log('NOTIF: SUCESSO',result);
+            fetchData();
         } catch (err) {
             console.error("NOTIF: Erro", err)
         }
@@ -89,7 +98,7 @@ const HomePage = () => {
                 } else {
                     // Create a new entry with zero values and a temporary unique ID
                     return {
-                        id: category.id,  // Generate a temporary unique ID
+                        id: `${category.id}${month}${year}`,  // Generate a temporary unique ID
                         transactionName: category.categoryName,
                         category: category,
                         monthlyData: {
