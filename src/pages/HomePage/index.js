@@ -69,15 +69,27 @@ const HomePage = () => {
         setNewCurrentMonthRows(newRows);
     };
 
+    function adjustMonth(date, months) {
+        const newDate = new Date(date);
+        const dayOfMonth = newDate.getDate();
+    
+        newDate.setMonth(newDate.getMonth() + months);
+    
+        // If the day of the month is now in a different month, set it to the last day of the previous month.
+        if (newDate.getDate() < dayOfMonth) {
+            newDate.setDate(0);
+        }
+    
+        return newDate;
+    }
+
     const filterByMonthsAndZeroIfNotDefined = (rows, date, categories) => {
         const currentDate = new Date(date);
         const currentYear = currentDate.getFullYear();
     
-        const lastDate = new Date(currentDate);
-        lastDate.setMonth(currentDate.getMonth() - 1);
+        const lastDate = adjustMonth(currentDate, -1);
     
-        const nextDate = new Date(currentDate);
-        nextDate.setMonth(currentDate.getMonth() + 1);
+        const nextDate = adjustMonth(currentDate, 1);
     
         const monthsToCheck = [
             { month: currentDate.getMonth() , year: currentYear },
