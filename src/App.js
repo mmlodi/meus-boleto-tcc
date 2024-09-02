@@ -65,14 +65,14 @@ function App() {
                   <ListItemText primary="Home" />
               </ListItemButton>
             </ListItem>
-            <ListItem key="Boletos" disablePadding>
+            {/* <ListItem key="Boletos" disablePadding>
               <ListItemButton onClick={() => navigate('/transactions')}>
                 <ListItemIcon >
                   <FactCheckIcon />
                 </ListItemIcon>
                   <ListItemText primary="Boletos" />
               </ListItemButton>
-            </ListItem>
+            </ListItem> */}
             <ListItem key="Categorias" disablePadding>
               <ListItemButton onClick={() => navigate('/category')}>
                 <ListItemIcon>

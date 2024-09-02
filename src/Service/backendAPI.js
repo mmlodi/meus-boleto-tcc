@@ -11,8 +11,6 @@ const request = async (endpoint, method = 'GET', body = null) => {
     headers,
     body: body ? JSON.stringify(body) : null,
   };
-  console.log("URL DA API ",API_URL);
-  console.log("ENDPOINT",endpoint);
   try {
     const response = await fetch(`${API_URL}/${endpoint}`, config);
 

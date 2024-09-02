@@ -15,18 +15,20 @@ const HomePage = () => {
     const [selectedMonth, setSelectedMonth] = useState( new Date());
     const [currentMonthRows, setCurrentMonthRows] = useState([]);
     const [newCurrentMonthRows, setNewCurrentMonthRows] = useState(currentMonthRows);
-    const categories = [
-        { id: 1, categoryName: "Livros", tipoCategoria: "BOLETO" },
-        { id: 2, categoryName: "Uber", tipoCategoria: "BOLETO" },
-        { id: 3, categoryName: "Gasolina", tipoCategoria: "BOLETO" },
-        { id: 4, categoryName: "Academia", tipoCategoria: "BOLETO" },
-        { id: 5, categoryName: "Lazer", tipoCategoria: "BOLETO" },
-        { id: 6, categoryName: "Alimentação", tipoCategoria: "BOLETO" },
-        { id: 7, categoryName: "Mercado", tipoCategoria: "BOLETO" }
-    ];
+    const [ categories , setCategories ] = useState([]);
+    // const categories = [
+    //     { id: 1, categoryName: "Livros", tipoCategoria: "BOLETO" },
+    //     { id: 2, categoryName: "Uber", tipoCategoria: "BOLETO" },
+    //     { id: 3, categoryName: "Gasolina", tipoCategoria: "BOLETO" },
+    //     { id: 4, categoryName: "Academia", tipoCategoria: "BOLETO" },
+    //     { id: 5, categoryName: "Lazer", tipoCategoria: "BOLETO" },
+    //     { id: 6, categoryName: "Alimentação", tipoCategoria: "BOLETO" },
+    //     { id: 7, categoryName: "Mercado", tipoCategoria: "BOLETO" }
+    // ];
 
     useEffect( ()=> {
-          fetchData();
+        getCategories();
+        getTransation();
     },[])
 
     useEffect(()=>{
@@ -35,7 +37,17 @@ const HomePage = () => {
         handleMonthSelect(date);
     },[currentMonthRows])
 
-    const fetchData = async () => {
+    const getCategories = async () => {
+        try {
+            const result = await api.get('categories');// Replace 'data-endpoint' with your actual endpoint
+            console.log('NOTIF: SUCESSO',result);
+            setCategories(result);
+        } catch (err) {
+            console.error("NOTIF: Erro", err)
+        }
+    };
+
+    const getTransation = async () => {
         try {
             const result = await api.get('transactions/user/1');// Replace 'data-endpoint' with your actual endpoint
             console.log('NOTIF: SUCESSO',result);
@@ -56,7 +68,7 @@ const HomePage = () => {
         try {
             const result = await api.post('transactions',bodyToSend);// Replace 'data-endpoint' with your actual endpoint
             console.log('NOTIF: SUCESSO',result);
-            fetchData();
+            getTransation();
         } catch (err) {
             console.error("NOTIF: Erro", err)
         }

@@ -13,7 +13,7 @@ import {
   GridActionsCellItem,
   GridRowEditStopReasons,
 } from '@mui/x-data-grid';
-
+import { randomInt } from '@mui/x-data-grid-generator';
 //{ id: 1, mes: 5, ano: 2024,nomeTransacao: 'Refeicao', tipoTransacao: 'Gasto', valorTransacao: 332.50, valorOrcamento: 350.60 },
 
 
@@ -22,8 +22,8 @@ function EditToolbar(props) {
   const { setRows, setRowModesModel } = props;
 
   const handleClick = () => {
-    const id = 232321;
-    setRows((oldRows) => [...oldRows, { id, name: '',createdAt: new Date() ,isNew: true }]);
+    const id = randomInt(2000,10000);
+    setRows((oldRows) => [...oldRows, { id ,isNew: true }]);
     setRowModesModel((oldModel) => ({
       ...oldModel,
       [id]: { mode: GridRowModes.Edit, fieldToFocus: 'name' },
@@ -39,9 +39,14 @@ function EditToolbar(props) {
   );
 }
 
-export default function DataGridCategory({categories}) {
+export default function DataGridCategory({categories, onCreate, onUpdate, onDelete}) {
   const [rows, setRows] = React.useState(categories);
   const [rowModesModel, setRowModesModel] = React.useState({});
+
+
+  React.useEffect( () =>{
+    setRows(categories);
+  },[categories]) 
 
   const handleRowEditStop = (params, event) => {
     if (params.reason === GridRowEditStopReasons.rowFocusOut) {
@@ -59,6 +64,8 @@ export default function DataGridCategory({categories}) {
 
   const handleDeleteClick = (id) => () => {
     setRows(rows.filter((row) => row.id !== id));
+    onDelete(id);
+    
   };
 
   const handleCancelClick = (id) => () => {
@@ -74,8 +81,16 @@ export default function DataGridCategory({categories}) {
   };
 
   const processRowUpdate = (newRow) => {
-    const updatedRow = { ...newRow, isNew: false };
+    const updatedRow = { ...newRow };
     setRows(rows.map((row) => (row.id === newRow.id ? updatedRow : row)));
+    console.log("updateRow",updatedRow)
+    // Trigger the appropriate callback
+    if (updatedRow.isNew) {
+      onCreate(updatedRow); // Call onCreate if the row is new
+    } else {
+      onUpdate(updatedRow.id,updatedRow); // Call onUpdate if the row is being updated
+    }
+
     return updatedRow;
   };
 
@@ -144,7 +159,7 @@ export default function DataGridCategory({categories}) {
   return (
     <Box
       sx={{
-        height: 500,
+        height: '70vh',
         width: '100%',
         '& .actions': {
           color: 'text.secondary',
