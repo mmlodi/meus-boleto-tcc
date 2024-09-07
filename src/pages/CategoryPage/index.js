@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from "react";
 import DataGridCategory from "../../components/CategoryDataGrid";
 import { api } from "../../Service/backendAPI"
+import useAuth from "../../hooks/useAuth";
 function CategoryPage() {
     const [categories, setCategories] = useState([]);
-
+    const {user} = useAuth();
     useEffect(()=>{
         getCategories();
     },[])
 
     const getCategories = async () => {
         try {
-            const result = await api.get('categories');// Replace 'data-endpoint' with your actual endpoint
+            const result = await api.get('categories/user/'+user.id);
             console.log('NOTIF: SUCESSO',result);
             setCategories(result);
         } catch (err) {
@@ -49,6 +50,8 @@ function CategoryPage() {
     };
 
     const handleCreate = (body) =>{
+        console.log(body);
+        body = {...body, user: {id: user.id }}
         postCategories(body);
     }
 
@@ -64,7 +67,7 @@ function CategoryPage() {
         <React.Fragment>
             <h1>Categorias</h1>
             
-            {categories.length > 0 && <DataGridCategory categories={categories} onCreate={handleCreate} onUpdate={handleUpdate} onDelete={handleDelete}/>}
+            {<DataGridCategory categories={categories} onCreate={handleCreate} onUpdate={handleUpdate} onDelete={handleDelete}/>}
         </React.Fragment>
     )
 }

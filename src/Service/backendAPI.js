@@ -1,8 +1,10 @@
 const API_URL = process.env.REACT_APP_JAVA_APP_API_BACKEND_URL; // Replace with your actual API URL
 
+
 const request = async (endpoint, method = 'GET', body = null) => {
   const headers = {
     'Content-Type': 'application/json',
+    'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
     // Add any other headers here, e.g., Authorization tokens
   };
 

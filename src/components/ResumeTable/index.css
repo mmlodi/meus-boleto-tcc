@@ -1,0 +1,19 @@
+.transaction-summary {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+  }
+  
+  .transaction-summary .over-budget {
+    color: red;
+    font-weight: bold;
+  }
+  
+  .transaction-summary .under-budget {
+    color: green;
+    font-weight: bold;
+  }
+  
+  .transaction-summary .MuiTypography-button {
+    display: inline-block;
+    margin: 5px 0;
+  }

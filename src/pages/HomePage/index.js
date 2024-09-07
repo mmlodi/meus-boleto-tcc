@@ -8,23 +8,15 @@ import { Card } from '@mui/material';
 import TabelaResumo from '../../components/ResumeTable';
 import { api } from '../../Service/backendAPI';
 import { randomInt } from '@mui/x-data-grid-generator';
-
+import useAuth from '../../hooks/useAuth';
 const HomePage = () => {
-
 
     const [selectedMonth, setSelectedMonth] = useState( new Date());
     const [currentMonthRows, setCurrentMonthRows] = useState([]);
     const [newCurrentMonthRows, setNewCurrentMonthRows] = useState(currentMonthRows);
     const [ categories , setCategories ] = useState([]);
-    // const categories = [
-    //     { id: 1, categoryName: "Livros", tipoCategoria: "BOLETO" },
-    //     { id: 2, categoryName: "Uber", tipoCategoria: "BOLETO" },
-    //     { id: 3, categoryName: "Gasolina", tipoCategoria: "BOLETO" },
-    //     { id: 4, categoryName: "Academia", tipoCategoria: "BOLETO" },
-    //     { id: 5, categoryName: "Lazer", tipoCategoria: "BOLETO" },
-    //     { id: 6, categoryName: "Alimentação", tipoCategoria: "BOLETO" },
-    //     { id: 7, categoryName: "Mercado", tipoCategoria: "BOLETO" }
-    // ];
+    const {user} = useAuth();
+
 
     useEffect( ()=> {
         getCategories();
@@ -39,7 +31,7 @@ const HomePage = () => {
 
     const getCategories = async () => {
         try {
-            const result = await api.get('categories');// Replace 'data-endpoint' with your actual endpoint
+            const result = await api.get('categories/user/'+user.id);// Replace 'data-endpoint' with your actual endpoint
             console.log('NOTIF: SUCESSO',result);
             setCategories(result);
         } catch (err) {
@@ -49,7 +41,7 @@ const HomePage = () => {
 
     const getTransation = async () => {
         try {
-            const result = await api.get('transactions/user/1');// Replace 'data-endpoint' with your actual endpoint
+            const result = await api.get('transactions/user/'+user.id);// Replace 'data-endpoint' with your actual endpoint
             console.log('NOTIF: SUCESSO',result);
             setCurrentMonthRows(result);
         } catch (err) {
@@ -61,7 +53,7 @@ const HomePage = () => {
         const bodyToSend = {
                 category: body.category,
                 monthlyData: body.monthlyData,
-                user: { id : 1 }, 
+                user: { id : user.id}, 
                 transactionValue: body.transactionValue,
                 transactionBudget: body.transactionBudget
             }
@@ -184,7 +176,8 @@ const HomePage = () => {
     //TODO CUIDAR COM O ANO NO FILTRO NAS LINHAS ABAIXO NÂO ESTOU FILTRANDO PELO ANO
     return (
         <React.Fragment>
-            <h1>Resumo Financeiro</h1>
+            <h1>Bem vindo, {user.username}</h1>
+            <h2>Resumo Financeiro</h2>
             <div >
                 <Card>
                     <div>
