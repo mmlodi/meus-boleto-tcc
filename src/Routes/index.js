@@ -9,6 +9,7 @@ import TransactionsPage from "../pages/TransactionsPage";
 import SignInSide from "../pages/SignInPage";
 import ProtectedRoute from "./ProtectedRoute";
 import SignUpSide from "../pages/SignUpPage";
+import { UserPage } from "../pages/UserPage";
 
 export default function AppRouter() {
     console.log("AppRouter");
@@ -24,6 +25,7 @@ export default function AppRouter() {
             <Route path="/transactions" element={<ProtectedRoute element={TransactionsPage} />} />
             <Route path="/dashboard" element={<ProtectedRoute element={DashboardPage} />} />
             <Route path="/investments" element={<ProtectedRoute element={InvestmentPage} />} />
+            <Route path="/user" element={<ProtectedRoute element={UserPage} />} />
             
             {/* Not Found Route */}
             <Route path="/NotFound" element={<NotFound />} />

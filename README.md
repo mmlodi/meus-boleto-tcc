@@ -1,70 +1,26 @@
-# Getting Started with Create React App
+# MeusBoleto
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+> This is a simple React project with the main purpose help the user with its personal finances. I started to helped me at first, but I am open to any help in the project. 
+> Frontend isn't in my fortress, so I used MUI V.5: https://v5.mui.com/material-ui/getting-started/
 
-## Available Scripts
 
-In the project directory, you can run:
+### Trabalhos futuros
 
-### `npm start`
+O projeto ainda está em desenvolvimento e as próximas atualizações serão voltadas para as seguintes tarefas:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- [ ] Bug - Se o usuário aumentar a largura da tela os gráficos na tela inicial vão aumentar junto e não vão se reajustar caso o usuário diminuir
+- [ ] Bug - No final de ano os dados do próximo ano não aparecem, é um erro tratando os dados e chamando na 'MainTable' 
+- [ ] Segurança/Bug - Implementar UserDTO para alteração dados
+- [ ] Feature - Pagina de investimentos;
+- [ ] Feature - Implementação com Docker;
+- [ ] Feature - Implementação para Adicionar recorrência de aportes ou débitos;
+- [ ] Feature - Botão para alterar tema claro/escuro;
+- [ ] Feature - Implementar biblioteca i18n para multiplas linguagens;
+- [ ] Feature - Separar Gráficos de Crédito e Débito
+- [ ] Feature - Melhorar tabela com resumo de ganhos, gastos e totais.
+- [ ] Feature - Implementar SnackBar para todas ações de notificação da plataforma
+- [ ] Feature - Criar padrões para botões na aplicação
+- [ ] Feature - Integrar na página de investimentos os ganhos na página principal.
+- [ ] Feature - Ajustar GETDATE() automaticamente no banco de dados para 'createdAt' e 'changedAt'
+- [ ] Feature - 
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)

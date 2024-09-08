@@ -1,7 +1,7 @@
 export default function InvestmentPage(){
     return(
         <div>
-            Pagina de investimentos
+            <h1>Pagina de investimentos</h1>
         </div>
     )
 }

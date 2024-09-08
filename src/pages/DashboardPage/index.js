@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import GlobalBarChart from "../../components/MainChart";
 import { api } from "../../Service/backendAPI";
 import useAuth from "../../hooks/useAuth";
@@ -35,9 +35,13 @@ function DashboardPage() {
     };
 
     return (
-    <div style={{ height:'30rem'}}>
-        { transactions.length > 0 && categories.length > 0 && <GlobalBarChart Xvalues={transactions} Yvalues={categories}/>}
-    </div>)
+        <Fragment>
+            <h1>Gráficos </h1>
+            <div style={{ height:'30rem'}}>
+                { transactions.length > 0 && categories.length > 0 && <GlobalBarChart Xvalues={transactions} Yvalues={categories}/>}
+            </div>
+        </Fragment>
+    )
 }
 
 export default DashboardPage;
