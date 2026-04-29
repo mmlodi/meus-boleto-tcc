@@ -1,5 +1,5 @@
 import emailjs from '@emailjs/browser';
-const PUBLIC_KEY_EMAIL = process.env.REACT_APP_EMAILJ_PUBLIC_KEY; // Replace with your actual API URL
+const PUBLIC_KEY_EMAIL = import.meta.env.VITE_EMAILJ_PUBLIC_KEY; // Replace with your actual API URL
 
 
 export const sendWellcomeMail = async (userInfo) => {

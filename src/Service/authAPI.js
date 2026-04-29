@@ -1,4 +1,4 @@
-const API_URL = process.env.REACT_APP_JAVA_APP_API_BACKEND_URL;
+const API_URL = import.meta.env.VITE_JAVA_APP_API_BACKEND_URL;
 const token = localStorage.getItem('jwt');
 
 // Login Function

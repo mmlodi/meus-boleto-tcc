@@ -13,10 +13,13 @@ import {
   GridActionsCellItem,
   GridRowEditStopReasons,
 } from '@mui/x-data-grid';
-import { randomInt } from '@mui/x-data-grid-generator';
 //{ id: 1, mes: 5, ano: 2024,nomeTransacao: 'Refeicao', tipoTransacao: 'Gasto', valorTransacao: 332.50, valorOrcamento: 350.60 },
 
-
+const randomInt = (min, max) => {
+  const lowerBound = Math.ceil(min);
+  const upperBound = Math.floor(max);
+  return Math.floor(Math.random() * (upperBound - lowerBound)) + lowerBound;
+};
 
 function EditToolbar(props) {
   const { setRows, setRowModesModel } = props;

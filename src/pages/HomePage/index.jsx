@@ -1,13 +1,10 @@
 import React ,{useEffect, useState}from 'react';
-import { styled } from '@mui/material/styles';
 import './index.css';
-import Paper from '@mui/material/Paper';
 import MonthNavigator from '../../components/MonthNavigator';
 import MainTable from '../../components/MainTable';
 import { Card } from '@mui/material';
 import TabelaResumo from '../../components/ResumeTable';
 import { api } from '../../Service/backendAPI';
-import { randomInt } from '@mui/x-data-grid-generator';
 import useAuth from '../../hooks/useAuth';
 const HomePage = () => {
 
