@@ -17,3 +17,9 @@
     display: inline-block;
     margin: 5px 0;
   }
+
+.summaryTableContainer .MuiTableCell-root {
+  padding-left: 8px;
+  padding-right: 8px;
+  white-space: nowrap;
+}

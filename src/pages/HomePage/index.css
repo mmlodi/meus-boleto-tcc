@@ -1,11 +1,38 @@
-.mainDiv {
-    display: flex;
-    justify-content: space-between;
-    gap: 20px; /* Adjust the gap as needed */
+.homePage {
+    width: 100%;
+    min-width: 0;
 }
 
-.mainDiv > div {
-    flex: 1;
+.monthNavigatorWrapper {
+    margin-bottom: 24px;
+}
+
+.mainDiv {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
+    align-items: start;
+    gap: 20px;
+    width: 100%;
+    min-width: 0;
+}
+
+.monthPanel {
+    min-width: 0;
     display: flex;
     flex-direction: column;
+    gap: 12px;
+}
+
+.monthPanel h3 {
+    margin: 0;
+}
+
+@media (max-width: 600px) {
+    .monthNavigatorWrapper {
+        margin-bottom: 16px;
+    }
+
+    .mainDiv {
+        gap: 16px;
+    }
 }

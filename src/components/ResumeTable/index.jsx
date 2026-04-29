@@ -62,8 +62,16 @@ export default function TabelaResumo({updatedRows}) {
   const liquidoGasto = result.totalBoletoValue - result.totalBoletoBudget;
 
   return (
-    <TableContainer component={Paper}>
-      <Table aria-label="transaction table">
+    <TableContainer
+      className="summaryTableContainer"
+      component={Paper}
+      sx={{
+        width: '100%',
+        minWidth: 0,
+        overflowX: 'auto',
+      }}
+    >
+      <Table aria-label="transaction table" size="small" sx={{ minWidth: 340 }}>
         <TableHead>
           <TableRow>
             <TableCell></TableCell>

@@ -172,10 +172,10 @@ const HomePage = () => {
 
     //TODO CUIDAR COM O ANO NO FILTRO NAS LINHAS ABAIXO NÂO ESTOU FILTRANDO PELO ANO
     return (
-        <React.Fragment>
+        <div className="homePage">
             <h1>Bem vindo, {user.username}</h1>
             <h2>Resumo Financeiro</h2>
-            <div >
+            <div className="monthNavigatorWrapper">
                 <Card>
                     <div>
                         <MonthNavigator onMonthChange={handleMonthSelect} />
@@ -183,23 +183,23 @@ const HomePage = () => {
                 </Card>
             </div>
             <div className='mainDiv'>
-                <div>
+                <div className="monthPanel">
                     <h3>Mês passado</h3>
                     { newCurrentMonthRows.length > 0 && <MainTable rows={newCurrentMonthRows.filter(item => item.monthlyData.month === selectedMonth.getMonth() - 1)} onUpdateValue={handleUpdateValue}/>}
                     { newCurrentMonthRows.length > 0 && <TabelaResumo  updatedRows={newCurrentMonthRows.filter(item => item.monthlyData.month === selectedMonth.getMonth() - 1)}/>}
                 </div>
-                <div>
+                <div className="monthPanel">
                     <h3>Mês escolhido</h3>
                     { newCurrentMonthRows.length > 0 && <MainTable rows={newCurrentMonthRows.filter(item => item.monthlyData.month === selectedMonth.getMonth())} onUpdateValue={handleUpdateValue}/>}
                     { newCurrentMonthRows.length > 0 &&<TabelaResumo updatedRows={newCurrentMonthRows.filter(item => item.monthlyData.month === selectedMonth.getMonth())}/>}
                 </div>
-                <div>
+                <div className="monthPanel">
                     <h3>Mês Futuro</h3>
                     { newCurrentMonthRows.length > 0 &&<MainTable rows={newCurrentMonthRows.filter(item => item.monthlyData.month === selectedMonth.getMonth() + 1 )} onUpdateValue={handleUpdateValue}/>}
                     { newCurrentMonthRows.length > 0 &&<TabelaResumo updatedRows={newCurrentMonthRows.filter(item => item.monthlyData.month === selectedMonth.getMonth() + 1 )}/>}
                 </div>
             </div>
-        </React.Fragment>
+        </div>
                         
     );
 

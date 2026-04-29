@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { DataGrid } from '@mui/x-data-grid';
+import Box from '@mui/material/Box';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 import {formatToCurrency} from '../../utils/utils';
@@ -26,16 +27,19 @@ const columns = [
   {
     field: 'category',
     headerName: 'Categoria',
-    width: 150,
+    flex: 1.2,
+    minWidth: 130,
     //editable: true,
     valueFormatter: (value) =>  {
-      return value.categoryName;
+      return value?.categoryName || '';
     }
   },
   {
     field: 'transactionValue',
     headerName: 'Total Gasto',
     type: 'number',
+    flex: 1,
+    minWidth: 110,
     editable: true,
     valueFormatter: (value) =>  {
       return formatToCurrency(value);
@@ -46,6 +50,8 @@ const columns = [
     field: 'transactionBudget',
     headerName: 'Orçado',
     type : 'number',
+    flex: 1,
+    minWidth: 100,
     editable: true,
     valueFormatter: (value) =>  {
       return formatToCurrency(value);
@@ -86,12 +92,11 @@ export default function MainTable({rows, onUpdateValue}) {
   }, []);
 
   return (  
-    <div >
+    <Box sx={{ width: '100%', minWidth: 0, overflowX: 'auto' }}>
       <DataGrid
         rows={rows}
         columns={columns}
         autoHeight={true}
-        autoWidth={true}
         rowHeight={30}
         hideFooter={true}
         hideFooterPagination={true}
@@ -100,6 +105,17 @@ export default function MainTable({rows, onUpdateValue}) {
         initialState={{
           sorting: {
             sortModel: [{ field: 'transactionName', sort: 'asc' }],
+          },
+        }}
+        sx={{
+          minWidth: 340,
+          width: '100%',
+          '& .MuiDataGrid-columnHeaderTitle': {
+            whiteSpace: 'normal',
+            lineHeight: 1.2,
+          },
+          '& .MuiDataGrid-cell': {
+            minWidth: 0,
           },
         }}
       />
@@ -114,7 +130,7 @@ export default function MainTable({rows, onUpdateValue}) {
           <Alert {...snackbar} onClose={handleCloseSnackbar} />
         </Snackbar>
       )}
-    </div>
+    </Box>
   );
 }
 
