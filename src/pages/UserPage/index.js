@@ -20,18 +20,22 @@ export const UserPage = () => {
         
         // Basic validation
         if (newPassword !== confirmNewPassword) {
-            setSnackbar({ children: 'A nova senha não é igual a digitada', severity: 'error' });
+            setSnackbar({ children: 'A nova senha não é igual a digitada no campo de confirmação', severity: 'error' });
+            return;
+        }
+
+        if (newPassword.length >= 12 ) {
+            setSnackbar({ children: 'A senha precisa ser maior ou igual a 12 caracteres', severity: 'error' });
             return;
         }
         
         if (!validateOldPassword(oldPassword)) {
-            setSnackbar({ children: 'A senha antiga não confere com a digitada', severity: 'error' });
-            return
+            setSnackbar({ children: 'A senha antiga é diferente da atual', severity: 'error' });
+            return;
         }
         
         // Simulate sending updated data to the server (replace with real API call)
         const updatedUser = {
-
             email: email,
             senha: newPassword
         };
@@ -48,8 +52,8 @@ export const UserPage = () => {
 
     const validateOldPassword = (oldPassword) => {
         //TODO Send to Backend a request
-        const old = "123"
-        return old === oldPassword;
+        //const old = "1234"
+        return true;
     }
 
     const handleCloseSnackbar = () => setSnackbar(null);

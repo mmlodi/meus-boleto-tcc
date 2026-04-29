@@ -12,7 +12,7 @@ import SignUpSide from "../pages/SignUpPage";
 import { UserPage } from "../pages/UserPage";
 
 export default function AppRouter() {
-    console.log("AppRouter");
+    //console.log("AppRouter");
     return (
         <Routes>
             {/* Public Route */}

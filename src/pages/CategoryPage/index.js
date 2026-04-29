@@ -2,8 +2,10 @@ import React, { useEffect, useState } from "react";
 import DataGridCategory from "../../components/CategoryDataGrid";
 import { api } from "../../Service/backendAPI"
 import useAuth from "../../hooks/useAuth";
+import { Alert, Snackbar } from "@mui/material";
 function CategoryPage() {
     const [categories, setCategories] = useState([]);
+    const [snackbar, setSnackbar] = useState(null);
     const {user} = useAuth();
     useEffect(()=>{
         getCategories();
@@ -52,22 +54,50 @@ function CategoryPage() {
     const handleCreate = (body) =>{
         console.log(body);
         body = {...body, user: {id: user.id }}
+
+        console.log("CRIAÇÃO CATEGORIAAA ",body);
+        if (body.categoryName == "" ) {
+            setSnackbar({ children: 'O Campo de nome da categoria não estar vazio!', severity: 'error' })
+            return;
+        }
+
+        if (body.tipoCategoria == null ) {
+            setSnackbar({ children: 'O Campo de tipo categoria não estar vazio!', severity: 'error' })
+            return;
+        }
         postCategories(body);
     }
 
     const handleUpdate= (id,body) =>{
+        if (body.categoryName == "" ) {
+            setSnackbar({ children: 'O Campo de nome da categoria não estar vazio!', severity: 'error' })
+            return;
+        }
+
         putCategories(id,body);
+        setSnackbar({ children: 'Alterações salvas', severity: 'success' })
     }
 
     const handleDelete = (id) =>{
         deleteCategories(id);
     }
 
+    const handleCloseSnackbar = () => setSnackbar(null);
+  
     return(
         <React.Fragment>
             <h1>Categorias</h1>
             
             {<DataGridCategory categories={categories} onCreate={handleCreate} onUpdate={handleUpdate} onDelete={handleDelete}/>}
+            <Snackbar
+                open
+                anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+                onClose={handleCloseSnackbar}
+                autoHideDuration={6000}
+                
+                >
+                <Alert {...snackbar} hidden={true} onClose={handleCloseSnackbar} />
+            </Snackbar>
         </React.Fragment>
     )
 }

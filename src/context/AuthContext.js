@@ -50,7 +50,7 @@ export const AuthProvider = ({ children }) => {
                 setIsAuthenticated(true); // Set user as authenticated
                 return null;
             } else {
-                return "Usuário não cadastrado"; // User not found or invalid credentials
+                return "Usuário e/ou senha incorretos"; // User not found or invalid credentials
             }
         } catch (error) {
             console.error('SignIn error:', error);

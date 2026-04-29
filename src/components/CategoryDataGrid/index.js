@@ -55,6 +55,7 @@ export default function DataGridCategory({categories, onCreate, onUpdate, onDele
   };
 
   const handleEditClick = (id) => () => {
+
     setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.Edit } });
   };
 

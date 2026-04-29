@@ -40,8 +40,26 @@ export default function SignUpSide() {
       novaSenha: data.get('novasenha'),
     };
 
+    if (user.senha == null | user.userName == null | user.userName == null | user.senha == null | user.novaSenha == null ) {
+      setError('Os campos para cadastro não podem estar vazios');
+      setLoading(false);
+      return;
+    }
+
+    if (user.senha.length < 12) {
+      setError('A senha precisa ser maior que 12 dígitos');
+      setLoading(false);
+      return;
+    }
+
     if (user.senha !== user.novaSenha) {
-      setError('Passwords do not match');
+      setError('As senhas não estão iguais');
+      setLoading(false);
+      return;
+    }
+
+    if (user.senha.length < 12) {
+      setError('A senha precisa ser maior que 12 dígitos');
       setLoading(false);
       return;
     }
