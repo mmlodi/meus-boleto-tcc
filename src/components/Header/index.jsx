@@ -4,31 +4,44 @@ import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import List from '@mui/material/List';
 import Typography from '@mui/material/Typography';
-import CssBaseline from '@mui/material/CssBaseline';
 import Divider from '@mui/material/Divider';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
+import Tooltip from '@mui/material/Tooltip';
+import Switch from '@mui/material/Switch';
+import DarkModeIcon from '@mui/icons-material/DarkMode';
+import LightModeIcon from '@mui/icons-material/LightMode';
 import HomeIcon from '@mui/icons-material/Home';
 import CategoryIcon from '@mui/icons-material/Category';
 import { AccountBox, BarChart, ShowChart } from '@mui/icons-material';
-import { Button, ThemeProvider, createTheme } from '@mui/material';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { Button } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 import React  from 'react';
 import { useAuth } from '../../context/AuthContext';
 
+function ThemeToggle({ isDarkMode, onToggleTheme }) {
+  return (
+    <Tooltip title={isDarkMode ? 'Tema escuro' : 'Tema claro'}>
+      <Box sx={{ display: 'flex', alignItems: 'center', color: 'inherit' }}>
+        {isDarkMode ? <DarkModeIcon fontSize="small" /> : <LightModeIcon fontSize="small" />}
+        <Switch
+          checked={isDarkMode}
+          onChange={onToggleTheme}
+          color="default"
+          inputProps={{ 'aria-label': 'Alternar tema claro e escuro' }}
+        />
+      </Box>
+    </Tooltip>
+  );
+}
 
-const darkTheme = createTheme({
-  palette: {
-    mode: 'dark',
-  },
-});
-
-function Header( {children}) {
+function Header({ children, themeMode, onToggleTheme }) {
   const navigate = useNavigate();
-  const { isAuthenticated, user, SignOut} = useAuth(); 
+  const { isAuthenticated, SignOut} = useAuth(); 
   const drawerWidth = 240;
+  const isDarkMode = themeMode === 'dark';
   
   const handleLogout = () => {
     SignOut();  // Call SignOut from your AuthContext
@@ -36,17 +49,18 @@ function Header( {children}) {
   };
 
   return (
-      <ThemeProvider theme={darkTheme}>
-        <Box sx={{ display: 'flex' }}>
+        <Box sx={{ display: 'flex', minHeight: '100vh', color: 'text.primary', bgcolor: 'background.default' }}>
           {isAuthenticated && <React.Fragment>
-            <CssBaseline />
             <AppBar
               position="fixed" sx={{ width: `calc(100% - ${drawerWidth}px)`, ml: `${drawerWidth}px`,  }}>
               <Toolbar style={{display:'flex', justifyContent:'space-between'}}>
                 <Typography variant="h6" noWrap component="div">
                   Meus Boleto
                 </Typography>
-                <Button color="inherit" onClick={handleLogout}>Sair</Button>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                  <ThemeToggle isDarkMode={isDarkMode} onToggleTheme={onToggleTheme} />
+                  <Button color="inherit" onClick={handleLogout}>Sair</Button>
+                </Box>
               </Toolbar>
             </AppBar>
             <Drawer
@@ -114,13 +128,32 @@ function Header( {children}) {
             </Drawer>
           </React.Fragment>
           }
+          {!isAuthenticated && (
+            <Box
+              sx={{
+                position: 'fixed',
+                top: 12,
+                right: 12,
+                zIndex: (theme) => theme.zIndex.tooltip,
+                display: 'flex',
+                alignItems: 'center',
+                px: 1,
+                border: 1,
+                borderColor: 'divider',
+                borderRadius: 1,
+                bgcolor: 'background.paper',
+                boxShadow: 1,
+              }}
+            >
+              <ThemeToggle isDarkMode={isDarkMode} onToggleTheme={onToggleTheme} />
+            </Box>
+          )}
 
           <Box component="main" sx={{ flexGrow: 1, bgcolor: 'background.default', p: 3 }}>
             <Toolbar />
             {children}
           </Box>
         </Box>
-      </ThemeProvider>
   );
 }
 
