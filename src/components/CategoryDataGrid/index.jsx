@@ -13,7 +13,7 @@ import {
   GridActionsCellItem,
   GridRowEditStopReasons,
 } from '@mui/x-data-grid';
-//{ id: 1, mes: 5, ano: 2024,nomeTransacao: 'Refeicao', tipoTransacao: 'Gasto', valorTransacao: 332.50, valorOrcamento: 350.60 },
+import { useTranslation } from 'react-i18next';
 
 const randomInt = (min, max) => {
   const lowerBound = Math.ceil(min);
@@ -22,11 +22,11 @@ const randomInt = (min, max) => {
 };
 
 function EditToolbar(props) {
-  const { setRows, setRowModesModel } = props;
+  const { setRows, setRowModesModel, t } = props;
 
   const handleClick = () => {
-    const id = randomInt(2000,10000);
-    setRows((oldRows) => [...oldRows, { id ,isNew: true }]);
+    const id = randomInt(2000, 10000);
+    setRows((oldRows) => [...oldRows, { id, isNew: true }]);
     setRowModesModel((oldModel) => ({
       ...oldModel,
       [id]: { mode: GridRowModes.Edit, fieldToFocus: 'name' },
@@ -36,20 +36,20 @@ function EditToolbar(props) {
   return (
     <GridToolbarContainer>
       <Button color="primary" startIcon={<AddIcon />} onClick={handleClick}>
-        Adicionar uma categoria
+        {t('category.add')}
       </Button>
     </GridToolbarContainer>
   );
 }
 
-export default function DataGridCategory({categories, onCreate, onUpdate, onDelete}) {
+export default function DataGridCategory({ categories, onCreate, onUpdate, onDelete }) {
+  const { t } = useTranslation();
   const [rows, setRows] = React.useState(categories);
   const [rowModesModel, setRowModesModel] = React.useState({});
 
-
-  React.useEffect( () =>{
+  React.useEffect(() => {
     setRows(categories);
-  },[categories]) 
+  }, [categories])
 
   const handleRowEditStop = (params, event) => {
     if (params.reason === GridRowEditStopReasons.rowFocusOut) {
@@ -69,7 +69,7 @@ export default function DataGridCategory({categories, onCreate, onUpdate, onDele
   const handleDeleteClick = (id) => () => {
     setRows(rows.filter((row) => row.id !== id));
     onDelete(id);
-    
+
   };
 
   const handleCancelClick = (id) => () => {
@@ -87,12 +87,11 @@ export default function DataGridCategory({categories, onCreate, onUpdate, onDele
   const processRowUpdate = (newRow) => {
     const updatedRow = { ...newRow };
     setRows(rows.map((row) => (row.id === newRow.id ? updatedRow : row)));
-    console.log("updateRow",updatedRow)
-    // Trigger the appropriate callback
+    console.log("updateRow", updatedRow)
     if (updatedRow.isNew) {
-      onCreate(updatedRow); // Call onCreate if the row is new
+      onCreate(updatedRow);
     } else {
-      onUpdate(updatedRow.id,updatedRow); // Call onUpdate if the row is being updated
+      onUpdate(updatedRow.id, updatedRow);
     }
 
     return updatedRow;
@@ -103,10 +102,10 @@ export default function DataGridCategory({categories, onCreate, onUpdate, onDele
   };
 
   const columns = [
-    { field: 'categoryName', headerName: 'Nome Categoria', width: 180, editable: true },
+    { field: 'categoryName', headerName: t('category.categoryName'), width: 180, editable: true },
     {
       field: 'tipoCategoria',
-      headerName: 'Tipo de transação',
+      headerName: t('category.transactionType'),
       width: 220,
       editable: true,
       type: 'singleSelect',
@@ -115,7 +114,7 @@ export default function DataGridCategory({categories, onCreate, onUpdate, onDele
     {
       field: 'actions',
       type: 'actions',
-      headerName: 'Ações',
+      headerName: t('category.actions'),
       width: 100,
       cellClassName: 'actions',
       getActions: ({ id }) => {
@@ -125,7 +124,7 @@ export default function DataGridCategory({categories, onCreate, onUpdate, onDele
           return [
             <GridActionsCellItem
               icon={<SaveIcon />}
-              label="Salvar"
+              label={t('common.save')}
               sx={{
                 color: 'primary.main',
               }}
@@ -133,7 +132,7 @@ export default function DataGridCategory({categories, onCreate, onUpdate, onDele
             />,
             <GridActionsCellItem
               icon={<CancelIcon />}
-              label="Cancelar"
+              label={t('common.cancel')}
               className="textPrimary"
               onClick={handleCancelClick(id)}
               color="inherit"
@@ -144,14 +143,14 @@ export default function DataGridCategory({categories, onCreate, onUpdate, onDele
         return [
           <GridActionsCellItem
             icon={<EditIcon />}
-            label="Editar"
+            label={t('common.edit')}
             className="textPrimary"
             onClick={handleEditClick(id)}
             color="inherit"
           />,
           <GridActionsCellItem
             icon={<DeleteIcon />}
-            label="Excluir"
+            label={t('common.delete')}
             onClick={handleDeleteClick(id)}
             color="inherit"
           />,
@@ -185,7 +184,7 @@ export default function DataGridCategory({categories, onCreate, onUpdate, onDele
           toolbar: EditToolbar,
         }}
         slotProps={{
-          toolbar: { setRows, setRowModesModel },
+          toolbar: { setRows, setRowModesModel, t },
         }}
       />
     </Box>

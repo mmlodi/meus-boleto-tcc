@@ -1,5 +1,6 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
 import { checkAuth, createNewUser, login } from '../Service/authAPI'; // Assuming checkAuth is for token validation with backend
+import i18n from '../i18n';
 
 export const AuthContext = createContext({});
 
@@ -50,11 +51,11 @@ export const AuthProvider = ({ children }) => {
                 setIsAuthenticated(true); // Set user as authenticated
                 return null;
             } else {
-                return "Usuário e/ou senha incorretos"; // User not found or invalid credentials
+                return i18n.t('auth.invalidCredentials'); // User not found or invalid credentials
             }
         } catch (error) {
             console.error('SignIn error:', error);
-            return "Erro ao tentar logar"; // Handle login error
+            return i18n.t('auth.signInError'); // Handle login error
         }
     };
 
@@ -66,11 +67,11 @@ export const AuthProvider = ({ children }) => {
                 console.log("AuthContext: usuário criado id: ",response.id, "userName:",response.userName)
                 return response;
             } else {
-                return  "Erro algum erro ao criar usuário"; // User not found or invalid credentials
+                return i18n.t('auth.signUpError'); // User not found or invalid credentials
             }
         } catch (error) {
             console.error('SignUp error:', error);
-            return "Exceção ao criar usuário";  // Handle login error
+            return i18n.t('auth.signUpException');  // Handle login error
         }
     };
 

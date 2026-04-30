@@ -6,6 +6,7 @@ import { Card } from '@mui/material';
 import TabelaResumo from '../../components/ResumeTable';
 import { api } from '../../Service/backendAPI';
 import useAuth from '../../hooks/useAuth';
+import { useTranslation } from 'react-i18next';
 
 function MonthPanel({ title, rows, onUpdateValue }) {
     return (
@@ -28,6 +29,7 @@ const HomePage = () => {
     const [newCurrentMonthRows, setNewCurrentMonthRows] = useState(currentMonthRows);
     const [categories, setCategories] = useState([]);
     const { user } = useAuth();
+    const { t } = useTranslation();
 
 
     useEffect(() => {
@@ -193,23 +195,23 @@ const HomePage = () => {
 
     const monthPanels = [
         {
-            title: 'Mês passado',
+            title: t('home.previousMonth'),
             rows: getRowsByMonth(adjustMonth(selectedMonth, -1))
         },
         {
-            title: 'Mês escolhido',
+            title: t('home.selectedMonth'),
             rows: getRowsByMonth(selectedMonth)
         },
         {
-            title: 'Mês futuro',
+            title: t('home.futureMonth'),
             rows: getRowsByMonth(adjustMonth(selectedMonth, 1))
         }
     ];
 
     return (
         <div className="homePage">
-            <h1>Bem vindo, {user.username}</h1>
-            <h2>Resumo Financeiro</h2>
+            <h1>{t('home.welcome', { username: user.username })}</h1>
+            <h2>{t('home.summary')}</h2>
             <div className="monthNavigatorWrapper">
                 <Card>
                     <div>

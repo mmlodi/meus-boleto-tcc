@@ -3,96 +3,132 @@ import { DataGrid } from '@mui/x-data-grid';
 import Box from '@mui/material/Box';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
-import {formatToCurrency} from '../../utils/utils';
+import { useTranslation } from 'react-i18next';
+import { formatToCurrency } from '../../utils/utils';
 
+const getColumnWidths = (tableWidth) => {
+  const safeTableWidth = Math.max(tableWidth, 1);
+  const categoryWidth = Math.floor(safeTableWidth * 0.42);
+  const transactionValueWidth = Math.floor(safeTableWidth * 0.30);
+  const transactionBudgetWidth = safeTableWidth - categoryWidth - transactionValueWidth;
 
-const useFakeMutation = () => {
+  return {
+    categoryWidth,
+    transactionValueWidth,
+    transactionBudgetWidth,
+  };
+};
+
+const useFakeMutation = (saveErrorMessage) => {
   return React.useCallback(
     (user) =>
       new Promise((resolve, reject) => {
         setTimeout(() => {
           if (user.name?.trim() === '') {
-            reject(new Error('Erro ai salvar item:'));
+            reject(new Error(saveErrorMessage));
           } else {
             resolve({ ...user, name: user.name?.toUpperCase() });
           }
         }, 200);
       }),
-    [],
+    [saveErrorMessage],
   );
 };
 
-const columns = [
-  //{ field: 'id', headerName: 'ID', width: 90 },
-  {
-    field: 'category',
-    headerName: 'Categoria',
-    flex: 1.2,
-    minWidth: 130,
-    //editable: true,
-    valueFormatter: (value) =>  {
-      return value?.categoryName || '';
-    }
-  },
-  {
-    field: 'transactionValue',
-    headerName: 'Total Gasto',
-    type: 'number',
-    flex: 1,
-    minWidth: 110,
-    editable: true,
-    valueFormatter: (value) =>  {
-      return formatToCurrency(value);
-    }
-      
-  },
-  {
-    field: 'transactionBudget',
-    headerName: 'Orçado',
-    type : 'number',
-    flex: 1,
-    minWidth: 100,
-    editable: true,
-    valueFormatter: (value) =>  {
-      return formatToCurrency(value);
-    }
-    //valueGetter: (value, row) => `${row.valorTransacao || ''} ${row.valorOrcamento || ''}`,
-  }
-];
-
-export default function MainTable({rows, onUpdateValue}) {
-
-  const mutateRow = useFakeMutation();
-  //const [completedRows, setCompletedRows ] = React.useState(rows)
+export default function MainTable({ rows, onUpdateValue }) {
+  const tableWrapperRef = React.useRef(null);
+  const { t } = useTranslation();
+  const [tableWidth, setTableWidth] = React.useState(1);
+  const mutateRow = useFakeMutation(t('mainTable.saveError'));
   const [snackbar, setSnackbar] = React.useState(null);
 
   const handleCloseSnackbar = () => setSnackbar(null);
-
-  const processRowUpdate = React.useCallback(
-    async (newRow) => {
-      try {
-        // Make the HTTP request to save in the backend
-        const response = await mutateRow(newRow);
-  
-        // Update the parent component state
-        onUpdateValue(response);
-  
-        setSnackbar({ children: 'Alterações salvas', severity: 'success' });
-        return response;
-      } catch (error) {
-        handleProcessRowUpdateError(error);
-        throw error; // rethrow the error to keep it bubbling up
-      }
-    },
-    [mutateRow, onUpdateValue],
-  );
 
   const handleProcessRowUpdateError = React.useCallback((error) => {
     setSnackbar({ children: error.message, severity: 'error' });
   }, []);
 
-  return (  
-    <Box sx={{ width: '100%', minWidth: 0, overflowX: 'auto' }}>
+  const processRowUpdate = React.useCallback(
+    async (newRow) => {
+      try {
+        const response = await mutateRow(newRow);
+
+        onUpdateValue(response);
+
+        setSnackbar({ children: t('mainTable.saved'), severity: 'success' });
+        return response;
+      } catch (error) {
+        handleProcessRowUpdateError(error);
+        throw error;
+      }
+    },
+    [handleProcessRowUpdateError, mutateRow, onUpdateValue, t],
+  );
+
+  React.useEffect(() => {
+    const wrapper = tableWrapperRef.current;
+
+    if (!wrapper) {
+      return undefined;
+    }
+
+    const updateWidth = (width = wrapper.clientWidth) => {
+      setTableWidth(Math.max(Math.floor(width), 1));
+    };
+
+    updateWidth();
+
+    if (typeof ResizeObserver === 'undefined') {
+      const handleResize = () => updateWidth();
+      window.addEventListener('resize', handleResize);
+      return () => window.removeEventListener('resize', handleResize);
+    }
+
+    const resizeObserver = new ResizeObserver(([entry]) => {
+      updateWidth(entry.contentRect.width);
+    });
+
+    resizeObserver.observe(wrapper);
+    return () => resizeObserver.disconnect();
+  }, []);
+
+  const columns = React.useMemo(() => {
+    const { categoryWidth, transactionValueWidth, transactionBudgetWidth } = getColumnWidths(tableWidth);
+
+    return [
+      {
+        field: 'category',
+        headerName: t('mainTable.category'),
+        width: categoryWidth,
+        valueFormatter: (value) => {
+          return value?.categoryName || '';
+        },
+      },
+      {
+        field: 'transactionValue',
+        headerName: t('mainTable.totalSpent'),
+        type: 'number',
+        width: transactionValueWidth,
+        editable: true,
+        valueFormatter: (value) => {
+          return formatToCurrency(value);
+        },
+      },
+      {
+        field: 'transactionBudget',
+        headerName: t('mainTable.budget'),
+        type: 'number',
+        width: transactionBudgetWidth,
+        editable: true,
+        valueFormatter: (value) => {
+          return formatToCurrency(value);
+        },
+      },
+    ];
+  }, [tableWidth, t]);
+
+  return (
+    <Box ref={tableWrapperRef}>
       <DataGrid
         rows={rows}
         columns={columns}
@@ -108,14 +144,12 @@ export default function MainTable({rows, onUpdateValue}) {
           },
         }}
         sx={{
-          minWidth: 340,
-          width: '100%',
+          width: tableWidth,
+          maxWidth: '100%',
           '& .MuiDataGrid-columnHeaderTitle': {
             whiteSpace: 'normal',
             lineHeight: 1.2,
-          },
-          '& .MuiDataGrid-cell': {
-            minWidth: 0,
+            textOverflow: 'ellipsis',
           },
         }}
       />
@@ -125,7 +159,6 @@ export default function MainTable({rows, onUpdateValue}) {
           anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
           onClose={handleCloseSnackbar}
           autoHideDuration={6000}
-          
         >
           <Alert {...snackbar} onClose={handleCloseSnackbar} />
         </Snackbar>
@@ -133,6 +166,3 @@ export default function MainTable({rows, onUpdateValue}) {
     </Box>
   );
 }
-
-
-

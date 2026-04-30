@@ -1,0 +1,260 @@
+import i18n from 'i18next';
+import { initReactI18next } from 'react-i18next';
+
+const resources = {
+  'pt-BR': {
+    translation: {
+      common: {
+        appName: 'MeusBoleto',
+        language: 'Idioma',
+        portuguese: 'Português',
+        english: 'Inglês',
+        logout: 'Sair',
+        save: 'Salvar',
+        cancel: 'Cancelar',
+        edit: 'Editar',
+        delete: 'Excluir',
+      },
+      theme: {
+        dark: 'Tema escuro',
+        light: 'Tema claro',
+        toggle: 'Alternar tema claro e escuro',
+      },
+      nav: {
+        home: 'Home',
+        categories: 'Categoria',
+        investments: 'Investimentos',
+        dashboards: 'Dashboards',
+        profile: 'Perfil',
+      },
+      auth: {
+        signInTitle: 'Entre na sua conta',
+        username: 'Usuário',
+        password: 'Senha',
+        rememberBrowser: 'Lembrar neste navegador',
+        signIn: 'Entrar',
+        signingIn: 'Entrando...',
+        forgotPassword: 'Esqueceu a senha?',
+        signUp: 'Cadastre-se',
+        createAccount: 'Cadastrar',
+        loading: 'Carregando...',
+        email: 'Email',
+        confirmPassword: 'Confirmar senha',
+        alreadyHaveAccount: 'Já tem uma conta? Entrar',
+        fieldsRequired: 'Os campos para cadastro não podem estar vazios',
+        passwordMin: 'A senha precisa ser maior que 12 dígitos',
+        passwordMismatch: 'As senhas não estão iguais',
+        unexpectedError: 'Ocorreu um erro inesperado. Tente novamente.',
+        invalidCredentials: 'Usuário e/ou senha incorretos',
+        signInError: 'Erro ao tentar logar',
+        signUpError: 'Erro ao criar usuário',
+        signUpException: 'Exceção ao criar usuário',
+      },
+      home: {
+        welcome: 'Bem vindo, {{username}}',
+        summary: 'Resumo Financeiro',
+        previousMonth: 'Mês passado',
+        selectedMonth: 'Mês escolhido',
+        futureMonth: 'Mês futuro',
+      },
+      months: {
+        january: 'Janeiro',
+        february: 'Fevereiro',
+        march: 'Março',
+        april: 'Abril',
+        may: 'Maio',
+        june: 'Junho',
+        july: 'Julho',
+        august: 'Agosto',
+        september: 'Setembro',
+        october: 'Outubro',
+        november: 'Novembro',
+        december: 'Dezembro',
+      },
+      mainTable: {
+        category: 'Categoria',
+        totalSpent: 'Total gasto',
+        budget: 'Orçado',
+        saved: 'Alterações salvas',
+        saveError: 'Erro ao salvar item:',
+      },
+      summaryTable: {
+        real: 'Real',
+        budget: 'Orçado',
+        net: 'Líquido',
+        income: 'Ganho',
+        expense: 'Gasto',
+      },
+      category: {
+        pageTitle: 'Categorias',
+        add: 'Adicionar uma categoria',
+        categoryName: 'Nome Categoria',
+        transactionType: 'Tipo de transação',
+        actions: 'Ações',
+        nameRequired: 'O campo de nome da categoria não pode estar vazio!',
+        typeRequired: 'O campo de tipo da categoria não pode estar vazio!',
+        saved: 'Alterações salvas',
+      },
+      user: {
+        title: 'Configurações de usuário',
+        oldPassword: 'Senha antiga',
+        newPassword: 'Senha nova',
+        confirmNewPassword: 'Confirmação da senha nova',
+        updateData: 'Atualizar dados',
+        passwordMismatch: 'A nova senha não é igual à digitada no campo de confirmação',
+        passwordLength: 'A senha precisa ser maior ou igual a 12 caracteres',
+        oldPasswordDifferent: 'A senha antiga é diferente da atual',
+        success: 'Dados alterados com sucesso',
+        requestError: 'Houve algum erro com a solicitação',
+      },
+      pages: {
+        charts: 'Gráficos',
+        bills: 'Boletos',
+        income: 'Rendas',
+        investments: 'Página de investimentos',
+        transactions: 'Transações',
+        notFound: '404 - Página não encontrada',
+      },
+    },
+  },
+  en: {
+    translation: {
+      common: {
+        appName: 'MeusBoleto',
+        language: 'Language',
+        portuguese: 'Portuguese',
+        english: 'English',
+        logout: 'Log out',
+        save: 'Save',
+        cancel: 'Cancel',
+        edit: 'Edit',
+        delete: 'Delete',
+      },
+      theme: {
+        dark: 'Dark theme',
+        light: 'Light theme',
+        toggle: 'Toggle light and dark theme',
+      },
+      nav: {
+        home: 'Home',
+        categories: 'Categories',
+        investments: 'Investments',
+        dashboards: 'Dashboards',
+        profile: 'Profile',
+      },
+      auth: {
+        signInTitle: 'Sign in to your account',
+        username: 'Username',
+        password: 'Password',
+        rememberBrowser: 'Remember this browser',
+        signIn: 'Sign in',
+        signingIn: 'Signing in...',
+        forgotPassword: 'Forgot password?',
+        signUp: 'Create account',
+        createAccount: 'Create account',
+        loading: 'Loading...',
+        email: 'Email',
+        confirmPassword: 'Confirm password',
+        alreadyHaveAccount: 'Already have an account? Sign in',
+        fieldsRequired: 'Sign-up fields cannot be empty',
+        passwordMin: 'Password must be longer than 12 characters',
+        passwordMismatch: 'Passwords do not match',
+        unexpectedError: 'An unexpected error occurred. Please try again.',
+        invalidCredentials: 'Incorrect username and/or password',
+        signInError: 'Error trying to sign in',
+        signUpError: 'Error creating user',
+        signUpException: 'Exception while creating user',
+      },
+      home: {
+        welcome: 'Welcome, {{username}}',
+        summary: 'Financial Summary',
+        previousMonth: 'Previous month',
+        selectedMonth: 'Selected month',
+        futureMonth: 'Future month',
+      },
+      months: {
+        january: 'January',
+        february: 'February',
+        march: 'March',
+        april: 'April',
+        may: 'May',
+        june: 'June',
+        july: 'July',
+        august: 'August',
+        september: 'September',
+        october: 'October',
+        november: 'November',
+        december: 'December',
+      },
+      mainTable: {
+        category: 'Category',
+        totalSpent: 'Total spent',
+        budget: 'Budget',
+        saved: 'Changes saved',
+        saveError: 'Error saving item:',
+      },
+      summaryTable: {
+        real: 'Actual',
+        budget: 'Budget',
+        net: 'Net',
+        income: 'Income',
+        expense: 'Expense',
+      },
+      category: {
+        pageTitle: 'Categories',
+        add: 'Add a category',
+        categoryName: 'Category name',
+        transactionType: 'Transaction type',
+        actions: 'Actions',
+        nameRequired: 'Category name cannot be empty!',
+        typeRequired: 'Category type cannot be empty!',
+        saved: 'Changes saved',
+      },
+      user: {
+        title: 'User settings',
+        oldPassword: 'Old password',
+        newPassword: 'New password',
+        confirmNewPassword: 'Confirm new password',
+        updateData: 'Update data',
+        passwordMismatch: 'The new password does not match the confirmation field',
+        passwordLength: 'Password must be greater than or equal to 12 characters',
+        oldPasswordDifferent: 'The old password is different from the current password',
+        success: 'Data updated successfully',
+        requestError: 'There was an error with the request',
+      },
+      pages: {
+        charts: 'Charts',
+        bills: 'Bills',
+        income: 'Income',
+        investments: 'Investments page',
+        transactions: 'Transactions',
+        notFound: '404 - Page not found',
+      },
+    },
+  },
+};
+
+const getInitialLanguage = () => {
+  const storedLanguage = localStorage.getItem('language');
+
+  if (storedLanguage && resources[storedLanguage]) {
+    return storedLanguage;
+  }
+
+  return 'pt-BR';
+};
+
+i18n.use(initReactI18next).init({
+  resources,
+  lng: getInitialLanguage(),
+  fallbackLng: 'pt-BR',
+  interpolation: {
+    escapeValue: false,
+  },
+});
+
+i18n.on('languageChanged', (language) => {
+  localStorage.setItem('language', language);
+});
+
+export default i18n;

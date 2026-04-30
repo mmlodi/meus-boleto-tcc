@@ -1,25 +1,22 @@
 import * as React from 'react';
-import {formatToCurrency} from '../../utils/utils';
+import { formatToCurrency } from '../../utils/utils';
 import './index.css';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Typography } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 
+export default function TabelaResumo({ updatedRows }) {
+  const { t } = useTranslation();
 
-export default function TabelaResumo({updatedRows}) {
-
-  
   function sumTransactionValues(rows) {
     console.log("RESUMO ", rows);
-  
-    // Initialize all totals to 0
+
     let totalCreditoValue = 0;
     let totalCreditoBudget = 0;
     let totalBoletoValue = 0;
     let totalBoletoBudget = 0;
-  
-    // Loop through each row and sum based on the "tipoCategoria"
+
     rows.forEach(row => {
       if (row && row.category && row.category.tipoCategoria) {
-        // Check if "tipoCategoria" is "CREDITO"
         if (row.category.tipoCategoria === 'CREDITO') {
           if (row.transactionValue !== null) {
             totalCreditoValue += row.transactionValue;
@@ -28,8 +25,7 @@ export default function TabelaResumo({updatedRows}) {
             totalCreditoBudget += row.transactionBudget;
           }
         }
-        
-        // Check if "tipoCategoria" is "BOLETO"
+
         if (row.category.tipoCategoria === 'BOLETO') {
           if (row.transactionValue !== null) {
             totalBoletoValue += row.transactionValue;
@@ -40,8 +36,7 @@ export default function TabelaResumo({updatedRows}) {
         }
       }
     });
-  
-    // Return all the totals
+
     return {
       totalCreditoValue,
       totalCreditoBudget,
@@ -52,12 +47,6 @@ export default function TabelaResumo({updatedRows}) {
 
   const result = sumTransactionValues(updatedRows);
 
-  const getBudgetClass = (value) => {
-    return value > 0 ? 'over-budget' : 'under-budget';
-  };
- 
-
-  // Calculating "LIQUIDO" values
   const liquidoGanho = result.totalCreditoValue - result.totalCreditoBudget;
   const liquidoGasto = result.totalBoletoValue - result.totalBoletoBudget;
 
@@ -76,21 +65,20 @@ export default function TabelaResumo({updatedRows}) {
           <TableRow>
             <TableCell></TableCell>
             <TableCell align="center">
-              <Typography variant="button">REAL</Typography>
+              <Typography variant="button">{t('summaryTable.real')}</Typography>
             </TableCell>
             <TableCell align="center">
-              <Typography variant="button">ORÇADO</Typography>
+              <Typography variant="button">{t('summaryTable.budget')}</Typography>
             </TableCell>
             <TableCell align="center">
-              <Typography variant="button">LIQUIDO</Typography>
+              <Typography variant="button">{t('summaryTable.net')}</Typography>
             </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {/* GANHO Row */}
           <TableRow>
             <TableCell component="th" scope="row">
-              <Typography variant="button">GANHO</Typography>
+              <Typography variant="button">{t('summaryTable.income')}</Typography>
             </TableCell>
             <TableCell align="center">
               <Typography variant="body2">{formatToCurrency(result.totalCreditoValue)}</Typography>
@@ -103,10 +91,9 @@ export default function TabelaResumo({updatedRows}) {
             </TableCell>
           </TableRow>
 
-          {/* GASTO Row */}
           <TableRow>
             <TableCell component="th" scope="row">
-              <Typography variant="button">GASTO</Typography>
+              <Typography variant="button">{t('summaryTable.expense')}</Typography>
             </TableCell>
             <TableCell align="center">
               <Typography variant="body2">{formatToCurrency(result.totalBoletoValue)}</Typography>
@@ -123,6 +110,3 @@ export default function TabelaResumo({updatedRows}) {
     </TableContainer>
   );
 }
-
-
-

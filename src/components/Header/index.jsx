@@ -11,8 +11,11 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Tooltip from '@mui/material/Tooltip';
 import Switch from '@mui/material/Switch';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
+import TranslateIcon from '@mui/icons-material/Translate';
 import HomeIcon from '@mui/icons-material/Home';
 import CategoryIcon from '@mui/icons-material/Category';
 import { AccountBox, BarChart, ShowChart } from '@mui/icons-material';
@@ -20,18 +23,53 @@ import { Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import React  from 'react';
 import { useAuth } from '../../context/AuthContext';
+import { useTranslation } from 'react-i18next';
 
-function ThemeToggle({ isDarkMode, onToggleTheme }) {
+function ThemeToggle({ isDarkMode, onToggleTheme, t }) {
   return (
-    <Tooltip title={isDarkMode ? 'Tema escuro' : 'Tema claro'}>
+    <Tooltip title={isDarkMode ? t('theme.dark') : t('theme.light')}>
       <Box sx={{ display: 'flex', alignItems: 'center', color: 'inherit' }}>
         {isDarkMode ? <DarkModeIcon fontSize="small" /> : <LightModeIcon fontSize="small" />}
         <Switch
           checked={isDarkMode}
           onChange={onToggleTheme}
           color="default"
-          inputProps={{ 'aria-label': 'Alternar tema claro e escuro' }}
+          inputProps={{ 'aria-label': t('theme.toggle') }}
         />
+      </Box>
+    </Tooltip>
+  );
+}
+
+function LanguageSelect() {
+  const { i18n, t } = useTranslation();
+
+  const handleLanguageChange = (event) => {
+    i18n.changeLanguage(event.target.value);
+  };
+
+  return (
+    <Tooltip title={t('common.language')}>
+      <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, color: 'inherit' }}>
+        <TranslateIcon fontSize="small" />
+        <Select
+          size="small"
+          value={i18n.resolvedLanguage || i18n.language}
+          onChange={handleLanguageChange}
+          variant="standard"
+          disableUnderline
+          inputProps={{ 'aria-label': t('common.language') }}
+          sx={{
+            color: 'inherit',
+            minWidth: 72,
+            '& .MuiSelect-icon': {
+              color: 'inherit',
+            },
+          }}
+        >
+          <MenuItem value="pt-BR">PT</MenuItem>
+          <MenuItem value="en">EN</MenuItem>
+        </Select>
       </Box>
     </Tooltip>
   );
@@ -40,6 +78,7 @@ function ThemeToggle({ isDarkMode, onToggleTheme }) {
 function Header({ children, themeMode, onToggleTheme }) {
   const navigate = useNavigate();
   const { isAuthenticated, SignOut} = useAuth(); 
+  const { t } = useTranslation();
   const drawerWidth = 240;
   const isDarkMode = themeMode === 'dark';
   
@@ -55,11 +94,12 @@ function Header({ children, themeMode, onToggleTheme }) {
               position="fixed" sx={{ width: `calc(100% - ${drawerWidth}px)`, ml: `${drawerWidth}px`,  }}>
               <Toolbar style={{display:'flex', justifyContent:'space-between'}}>
                 <Typography variant="h6" noWrap component="div">
-                  Meus Boleto
+                  {t('common.appName')}
                 </Typography>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                  <ThemeToggle isDarkMode={isDarkMode} onToggleTheme={onToggleTheme} />
-                  <Button color="inherit" onClick={handleLogout}>Sair</Button>
+                  <LanguageSelect />
+                  <ThemeToggle isDarkMode={isDarkMode} onToggleTheme={onToggleTheme} t={t} />
+                  <Button color="inherit" onClick={handleLogout}>{t('common.logout')}</Button>
                 </Box>
               </Toolbar>
             </AppBar>
@@ -82,7 +122,7 @@ function Header({ children, themeMode, onToggleTheme }) {
                     <ListItemIcon>
                       <HomeIcon />
                     </ListItemIcon>
-                    <ListItemText primary="Home" />
+                    <ListItemText primary={t('nav.home')} />
                   </ListItemButton>
                 </ListItem>
                 <ListItem key="Categorias" disablePadding>
@@ -90,7 +130,7 @@ function Header({ children, themeMode, onToggleTheme }) {
                     <ListItemIcon>
                       <CategoryIcon />
                     </ListItemIcon>
-                    <ListItemText primary="Categoria" />
+                    <ListItemText primary={t('nav.categories')} />
                   </ListItemButton>
                 </ListItem>
                 <ListItem key="Investimentos" disablePadding>
@@ -98,7 +138,7 @@ function Header({ children, themeMode, onToggleTheme }) {
                     <ListItemIcon>
                       <ShowChart />
                     </ListItemIcon>
-                    <ListItemText primary="Investimentos" />
+                    <ListItemText primary={t('nav.investments')} />
                   </ListItemButton>
                 </ListItem>
                 <ListItem key="dash" disablePadding>
@@ -106,7 +146,7 @@ function Header({ children, themeMode, onToggleTheme }) {
                     <ListItemIcon>
                       <BarChart />
                     </ListItemIcon>
-                    <ListItemText primary="Dashboards" />
+                    <ListItemText primary={t('nav.dashboards')} />
                   </ListItemButton>
                 </ListItem>
                 <ListItem key="Perfil" disablePadding>
@@ -114,7 +154,7 @@ function Header({ children, themeMode, onToggleTheme }) {
                     <ListItemIcon>
                       <AccountBox />
                     </ListItemIcon>
-                    <ListItemText primary="Perfil" />
+                    <ListItemText primary={t('nav.profile')} />
                   </ListItemButton>
                 </ListItem>
               </List>
@@ -145,7 +185,8 @@ function Header({ children, themeMode, onToggleTheme }) {
                 boxShadow: 1,
               }}
             >
-              <ThemeToggle isDarkMode={isDarkMode} onToggleTheme={onToggleTheme} />
+              <LanguageSelect />
+              <ThemeToggle isDarkMode={isDarkMode} onToggleTheme={onToggleTheme} t={t} />
             </Box>
           )}
 

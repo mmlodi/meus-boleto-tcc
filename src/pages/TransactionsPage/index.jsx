@@ -1,13 +1,14 @@
-
 import React from "react";
 import FullFeaturedCrudGrid from "../../components/CategoryDataGrid";
+import { useTranslation } from "react-i18next";
 
 function TransactionsPage() {
-    //Alterar esse datagrid
-    return(
+    const { t } = useTranslation();
+
+    return (
         <React.Fragment>
-            <h1>Transações</h1>
-            <FullFeaturedCrudGrid/>
+            <h1>{t('pages.transactions')}</h1>
+            <FullFeaturedCrudGrid />
         </React.Fragment>
     )
 }
