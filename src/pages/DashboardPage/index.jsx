@@ -1,7 +1,6 @@
 import { Fragment, useEffect, useState } from "react";
 import GlobalBarChart from "../../components/MainChart";
 import { api } from "../../Service/backendAPI";
-import useAuth from "../../hooks/useAuth";
 import { useTranslation } from "react-i18next";
 
 function DashboardPage() {
@@ -9,7 +8,6 @@ function DashboardPage() {
     const [rendaTransactions, setRendaTransactions] = useState([]);
     const [boletoTransactions, setBoletoTransactions] = useState([]);
     const [categories, setCategories] = useState([]);
-    const { user } = useAuth();
     const { t } = useTranslation();
 
     useEffect(() => {
@@ -19,11 +17,9 @@ function DashboardPage() {
 
     const getTransation = async () => {
         try {
-            const result = await api.get('transactions/user/' + user.id);
-            console.log('NOTIF: SUCESSO', result);
+            const result = await api.get('transactions/me');
             setBoletoTransactions(filterTransaction(result, "BOLETO"));
             setRendaTransactions(filterTransaction(result, "CREDITO"));
-            console.log(boletoTransactions);
             setTransactions(result);
         } catch (err) {
             console.error("NOTIF: Erro", err)
@@ -32,8 +28,7 @@ function DashboardPage() {
 
     const getCategories = async () => {
         try {
-            const result = await api.get('categories/user/' + user.id);
-            console.log('NOTIF: SUCESSO', result);
+            const result = await api.get('categories/me');
             setCategories(result);
         } catch (err) {
             console.error("NOTIF: Erro", err)

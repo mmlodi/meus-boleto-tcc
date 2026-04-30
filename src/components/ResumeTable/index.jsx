@@ -8,7 +8,6 @@ export default function TabelaResumo({ updatedRows }) {
   const { t } = useTranslation();
 
   function sumTransactionValues(rows) {
-    console.log("RESUMO ", rows);
 
     let totalCreditoValue = 0;
     let totalCreditoBudget = 0;

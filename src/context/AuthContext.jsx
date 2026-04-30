@@ -11,38 +11,36 @@ export const AuthProvider = ({ children }) => {
 
     useEffect(() => {
         const token = localStorage.getItem("jwt");
-        const storedUser = JSON.parse(localStorage.getItem("userInfo"));
+        const storedUser = JSON.parse(localStorage.getItem("userInfo") || "null");
 
         const validateAuthentication = async () => {
-            if (token) {
-
-                // TODO: Validate token with the backend
-                console.log("AuthContext: ", token);
-                
-                // For example, you could use an API call here to validate the token:
-                // const validToken = await checkAuth(hasToken); (Assuming `checkAuth` does that)
-                const validToken = await checkAuth(token); // Mocked token validation for now
-                console.log("Token JWT is valid? ",validToken);
-
-                if (validToken) {
-                    setIsAuthenticated(true);
-                    setUser({id: storedUser.id,username: storedUser.username, email: storedUser.email});
-                } else {
+            try {
+                if (!token || !storedUser) {
                     SignOut();
+                    return;
                 }
+
+                const validToken = await checkAuth(token);
+
+                if (!validToken) {
+                    SignOut();
+                    return;
+                }
+
+                setIsAuthenticated(true);
+                setUser({id: storedUser.id,username: storedUser.username, email: storedUser.email});
+            } finally {
+                setLoading(false);
             }
         }
 
         validateAuthentication();
-
-        setLoading(false); // Loading is complete after checking token
 
     }, []);
 
     const SignIn = async (username, password) => {
         try {
             const response = await login(username, password); // Wait for API response
-            console.log(response);
 
             if (response.token) {
                 localStorage.setItem('jwt', response.token); // Save JWT to localStorage
@@ -64,7 +62,6 @@ export const AuthProvider = ({ children }) => {
             const response = await createNewUser(userName, senha, email);
 
             if (response.id) {
-                console.log("AuthContext: usuário criado id: ",response.id, "userName:",response.userName)
                 return response;
             } else {
                 return i18n.t('auth.signUpError'); // User not found or invalid credentials

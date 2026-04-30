@@ -17,8 +17,12 @@ const request = async (endpoint, method = 'GET', body = null) => {
     const response = await fetch(`${API_URL}/${endpoint}`, config);
 
     if (!response.ok) {
-      const error = await response.json();
+      const error = await response.json().catch(() => ({}));
       throw new Error(error.message || 'Something went wrong');
+    }
+
+    if (response.status === 204) {
+      return null;
     }
 
     return response.json();

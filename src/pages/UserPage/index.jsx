@@ -37,7 +37,7 @@ export const UserPage = () => {
             senha: newPassword
         };
 
-        const response = api.put('users/' + user.id, updatedUser);
+        const response = await api.put('users/' + user.id, updatedUser);
         if (response.id) {
             setSnackbar({ children: t('user.success'), severity: 'success' });
         } else {

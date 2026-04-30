@@ -87,7 +87,6 @@ export default function DataGridCategory({ categories, onCreate, onUpdate, onDel
   const processRowUpdate = (newRow) => {
     const updatedRow = { ...newRow };
     setRows(rows.map((row) => (row.id === newRow.id ? updatedRow : row)));
-    console.log("updateRow", updatedRow)
     if (updatedRow.isNew) {
       onCreate(updatedRow);
     } else {

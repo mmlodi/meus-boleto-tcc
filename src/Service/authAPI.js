@@ -1,5 +1,4 @@
 const API_URL = import.meta.env.VITE_JAVA_APP_API_BACKEND_URL;
-const token = localStorage.getItem('jwt');
 
 // Login Function
 export const login = async (username, password) => {
@@ -22,7 +21,7 @@ export const login = async (username, password) => {
                 return { error: 'No token found' };
             }
         } else {
-            const errorData = await response.json();
+            const errorData = await response.json().catch(() => ({}));
             console.error('Login failed', errorData);
             return { error: 'Login failed', details: errorData };
         }
@@ -56,7 +55,7 @@ export const createNewUser = async (username, senha, email) => {
                 return { error: 'No token found', details: 'No token found in the response' };
             }
         } else {
-            const errorData = await response.json();
+            const errorData = await response.json().catch(() => ({}));
             console.error('User Creation failed', errorData);
             return { error: 'User Creation failed', details: errorData };
         }
@@ -78,11 +77,10 @@ export const checkAuth = async (token) => {
             },
             credentials: 'include',
         });
-        console.log(response)
         if (response.ok) {
             return true;
         } else {
-            const errorData = await response.json();
+            const errorData = await response.json().catch(() => ({}));
             console.error('Token verification failed', errorData);
             return false;
         }
@@ -98,7 +96,7 @@ export const logout = async () => {
         const response = await fetch(API_URL + '/auth/logout', {
             method: 'POST',
             headers: {
-                'Authorization': `Bearer ${token}`, // Pass the JWT token for logout (if needed)
+                'Authorization': `Bearer ${localStorage.getItem('jwt')}`, // Pass the JWT token for logout (if needed)
                 'Content-Type': 'application/json',
             },
             credentials: 'include',
@@ -106,10 +104,10 @@ export const logout = async () => {
 
         if (response.ok) {
             localStorage.removeItem('jwt'); // Clear the JWT from local storage on successful logout
-            localStorage.removeItem('userinfo'); // Clear the JWT from local storage on successful logout
+            localStorage.removeItem('userInfo'); // Clear the user info from local storage on successful logout
             return { success: true };
         } else {
-            const errorData = await response.json();
+            const errorData = await response.json().catch(() => ({}));
             console.error('Logout failed', errorData);
             return { success: false, error: 'Logout failed', details: errorData };
         }

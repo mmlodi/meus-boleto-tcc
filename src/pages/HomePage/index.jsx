@@ -38,15 +38,13 @@ const HomePage = () => {
     }, [])
 
     useEffect(() => {
-        console.log(selectedMonth);
         const date = new Date(selectedMonth);
         handleMonthSelect(date);
     }, [currentMonthRows])
 
     const getCategories = async () => {
         try {
-            const result = await api.get('categories/user/' + user.id);// Replace 'data-endpoint' with your actual endpoint
-            console.log('NOTIF: SUCESSO', result);
+            const result = await api.get('categories/me');
             setCategories(result);
         } catch (err) {
             console.error("NOTIF: Erro", err)
@@ -55,8 +53,7 @@ const HomePage = () => {
 
     const getTransation = async () => {
         try {
-            const result = await api.get('transactions/user/' + user.id);// Replace 'data-endpoint' with your actual endpoint
-            console.log('NOTIF: SUCESSO', result);
+            const result = await api.get('transactions/me');
             setCurrentMonthRows(result);
         } catch (err) {
             console.error("NOTIF: Erro", err)
@@ -67,13 +64,11 @@ const HomePage = () => {
         const bodyToSend = {
             category: body.category,
             monthlyData: body.monthlyData,
-            user: { id: user.id },
             transactionValue: body.transactionValue,
             transactionBudget: body.transactionBudget
         }
         try {
             const result = await api.post('transactions', bodyToSend);// Replace 'data-endpoint' with your actual endpoint
-            console.log('NOTIF: SUCESSO', result);
             getTransation();
         } catch (err) {
             console.error("NOTIF: Erro", err)
@@ -82,7 +77,6 @@ const HomePage = () => {
 
     function handleMonthSelect(date) {
         setSelectedMonth(date);
-        console.log(date)
         const newRows = filterByMonthsAndZeroIfNotDefined(currentMonthRows, date, categories);
         setNewCurrentMonthRows(newRows);
     };
@@ -115,7 +109,6 @@ const HomePage = () => {
             { month: nextDate.getMonth(), year: nextDate.getFullYear() }
         ];
 
-        console.log(rows);
         const newRows = monthsToCheck.flatMap(({ month, year }) => {
             return categories.map(category => {
                 const existingRow = rows.find(row =>
@@ -137,7 +130,7 @@ const HomePage = () => {
                             year: year
                         },
                         description: "No transactions for this period",
-                        user: { id: 1 },  // Or default user if applicable
+            user: { id: user.id },
                         //createdAt: null,
                         //changedAt: null,
                         transactionValue: 0,
@@ -151,14 +144,11 @@ const HomePage = () => {
     };
 
     async function handleUpdateValue(value) {
-        console.log(value);
         updateRow(value);
         upsertNewValue(value);
     }
 
     const updateRow = (updatedFields) => {
-        console.log("ID:", updatedFields.id, "Updated Fields:", updatedFields);
-
         // Check if the row with the given ID exists
         const index = currentMonthRows.findIndex(row => row.id === updatedFields.id);
 
